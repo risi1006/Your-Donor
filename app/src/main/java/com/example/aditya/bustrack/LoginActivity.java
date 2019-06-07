@@ -131,17 +131,23 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mAuthStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
+
+            //changed was done
             if (user != null) {
-                Boolean ut = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
-                if (ut) {
-                    Intent intent = new Intent(LoginActivity.this, DriverMapsActivity.class);
+//                Boolean ut = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
+//                if (ut) {
+                    Intent intent = new Intent(LoginActivity.this, dashboard.class);
+//                Intent intent = new Intent(LoginActivity.this, DriverMapsActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
-                    Intent intent = new Intent(LoginActivity.this, StudentMapsActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+//                } else {
+//                    Intent intent = new Intent(LoginActivity.this, StudentMapsActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+                //up to here
             }
         };
 
@@ -167,17 +173,18 @@ public class LoginActivity extends AppCompatActivity {
              * Saving detail of the user in a shared preference file i.e he is driver or not
              * and will check from that shared pref while logging in!
              */
-            if (userType.getSelectedItem().toString().equals("Driver")) {
+            //change was done from here to here
+//            if (userType.getSelectedItem().toString().equals("Driver")) {
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
                 editor.putBoolean(getString(R.string.isDriver), true);
                 editor.apply();
 //                editor.commit();
-            }else{
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
-                editor.remove(getString(R.string.isDriver));
-//                editor.commit();
-                editor.apply();
-            }
+//            }else{
+//                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+//                editor.remove(getString(R.string.isDriver));
+////                editor.commit();
+//                editor.apply();
+//            }
 
 
 
@@ -203,17 +210,18 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordInput.getText().toString();
             String user = userType.getSelectedItem().toString();
 
-            if (user.equals("Driver")) {
+            //change was done from here to here
+//            if (user.equals("Driver")) {
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
                 editor.putBoolean(getString(R.string.isDriver), true);
 //                editor.commit();
                 editor.apply();
-            } else {
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
-                editor.remove(getString(R.string.isDriver));
-//                editor.commit();
-                editor.apply();
-            }
+//            } else {
+//                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+//                editor.remove(getString(R.string.isDriver));
+////                editor.commit();
+//                editor.apply();
+//            }
 
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, task -> {
                 if (!task.isSuccessful()) {
@@ -223,14 +231,17 @@ public class LoginActivity extends AppCompatActivity {
                     String user_id = mAuth.getCurrentUser().getUid();
 
                     Log.i(LOG_TAG, "User is : " + user);
-                    Boolean isDriver = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
-                    if (isDriver) {
+
+                    //change was done from here to here
+//                    Boolean isDriver = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
+//                    if (isDriver) {
                         DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id);
                         user_db.setValue(true);
-                    } else {
-                        DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(user_id);
-                        user_db.setValue(true);
-                    }
+//                    } else {
+//                        DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(user_id);
+//                        user_db.setValue(true);
+//                    }
+                    //up to here
                 }
             });
         });

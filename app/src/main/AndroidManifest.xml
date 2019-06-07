@@ -40,12 +40,13 @@
 
         <activity
             android:name=".DriverMapsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_driver_maps" />
+            android:label="@string/title_activity_driver_maps"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StudentMapsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_student_maps"/>
+            android:label="@string/title_activity_student_maps"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".dashboard"></activity>
     </application>
 
 </manifest>

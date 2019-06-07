@@ -219,7 +219,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                             LatLng busLocation = new LatLng(lat, lon);
                             if (mBusMarker != null) mBusMarker.remove();
-                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title("Your Donor here"));
+                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title("Your Donor"));
 
                         }
                     }
