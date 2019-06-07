@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "794503947357",
+    "firebase_url": "https://tracking-a9e7d.firebaseio.com/",
+    "project_id": "tracking-a9e7d",
+    "storage_bucket": "tracking-a9e7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794503947357:android:9d5ef8bc1b4728a8",
+        "android_client_info": {
+          "package_name": "com.example.aditya.bustrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794503947357-o3vgp9epuasvtcndfclur14c02udtjhv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aditya.bustrack",
+            "certificate_hash": "0752afcb3bd72fd5b9c6acc237de15911c7e0920"
+          }
+        },
+        {
+          "client_id": "794503947357-0n1u0at1d5t5vu71f9rh4hmhhc38mmj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeQpYXQqnlryIAtJIWCJWUomxxWZ0D5Pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794503947357-0n1u0at1d5t5vu71f9rh4hmhhc38mmj3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
