@@ -307,6 +307,19 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                                     case 3:
                                         bus_num = 23;
                                         break;
+                                    case 4:
+                                        bus_num = 21;
+                                        break;
+                                    case 5:
+                                        bus_num = 81;
+                                        break;
+                                    case 6:
+                                        bus_num = 111;
+                                        break;
+                                    case 7:
+                                        bus_num = 231;
+                                        break;
+
 
                                 }
                                 String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();

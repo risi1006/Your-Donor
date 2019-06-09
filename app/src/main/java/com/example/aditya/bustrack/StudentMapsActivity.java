@@ -80,11 +80,13 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     private GoogleApiClient mGoogleApiClient;
     private Location mLastKnownLocation;
     private LatLng etaLocation;
+    String myParentNode;
     private LatLng studentLocation;
     private LocationRequest mLocationRequest;
     private int radiusLocateBusRequest = 1;
     private boolean busFound = false;
     private String busDriverKey = "";
+    private String donordet = "";
     private ActionBarDrawerToggle mDrawerToggle;
     private View mMapView;
     private int bus_num;
@@ -92,7 +94,9 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     private SharedPreferences prefs;
     private Marker mBusMarker;
     private ProgressBar spinner;
-
+    String name3="";
+    DatabaseReference doornail;
+    DatabaseReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +106,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
         // Toolbar :: Transparent
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Locate your bus");
+        getSupportActionBar().setTitle("Locate your Donor");
 
         Window window = this.getWindow();
         // Status bar :: Transparent
@@ -150,11 +154,23 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                 case 3:
                                     bus_num = 23;
                                     break;
+                                case 4:
+                                    bus_num = 21;
+                                    break;
+                                case 5:
+                                    bus_num = 81;
+                                    break;
+                                case 6:
+                                    bus_num = 111;
+                                    break;
+                                case 7:
+                                    bus_num = 231;
+                                    break;
 
                             }
 
                             String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId); //Buses is removed
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
                             ref.setValue("Acceptor");
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putBoolean(getString(R.string.student_maps_first_time_launch), false);
@@ -201,25 +217,54 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                     Toast.makeText(StudentMapsActivity.this, "Sorry, No Donor is not online!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+
+
+
+
                 DatabaseReference busLocation = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
                 busLocation.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()){
-                            List<Object> map = (List<Object>)dataSnapshot.getValue();
+                        if (dataSnapshot.exists()) {
+                            List<Object> map = (List<Object>) dataSnapshot.getValue();
                             double lat = 0;
                             double lon = 0;
-                            if (map.get(0) != null){
+                            if (map.get(0) != null) {
                                 lat = Double.parseDouble(map.get(0).toString());
+
+//                               myParentNode
+                                       DatabaseReference def= dataSnapshot.getRef();
+                                       myParentNode = def.getParent().getKey();
+                                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+                                doornail.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        name3 = dataSnapshot.getValue().toString();
+                                        Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+
+
+
                             }
 
-                            if (map.get(1) != null){
+                            if (map.get(1) != null) {
                                 lon = Double.parseDouble(map.get(1).toString());
                             }
 
                             LatLng busLocation = new LatLng(lat, lon);
                             if (mBusMarker != null) mBusMarker.remove();
-                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title("Your Donor"));
+                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title(myParentNode));
+
+
 
                         }
                     }
@@ -229,6 +274,21 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                     }
                 });
+//
+//                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(donordet);
+//                doornail.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot1) {
+//                        String name3 = dataSnapshot1.child("name").getValue().toString();
+////                        String mobile3 = dataSnapshot.child("mobile").getValue().toString();
+//                        Toast.makeText(StudentMapsActivity.this,name3,Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Toast.makeText(StudentMapsActivity.this,"Error occured",Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
             }
         });
@@ -283,9 +343,9 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                                     String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users")
-                                            .child("Driver")
+                                            .child("Donor")
                                             .child(busDriverKey)
-                                            .child("studentRequest");
+                                            .child("acceptorRequest");
                                     driverRef.setValue(studentId);
 
                                     DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
@@ -337,6 +397,18 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                             break;
                                         case 3:
                                             bus_num = 23;
+                                            break;
+                                        case 4:
+                                            bus_num = 21;
+                                            break;
+                                        case 5:
+                                            bus_num = 81;
+                                            break;
+                                        case 6:
+                                            bus_num = 111;
+                                            break;
+                                        case 7:
+                                            bus_num = 231;
                                             break;
 
                                     }

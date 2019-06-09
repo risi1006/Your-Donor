@@ -46,7 +46,8 @@
             android:name=".StudentMapsActivity"
             android:label="@string/title_activity_student_maps"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dashboard"></activity>
+        <activity android:name=".dashboard" />
+        <activity android:name=".profile"></activity>
     </application>
 
 </manifest>

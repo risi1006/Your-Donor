@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -28,20 +29,25 @@ import android.widget.Toast;
 
 import android.graphics.drawable.AnimationDrawable;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private EditText r1, r2;
+    User user1 = new User();
     private CoordinatorLayout coordinatorLayout;
     private AnimationDrawable animationDrawable;
 
@@ -55,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.btnregister)
     Button register;
-    @BindView(R.id.chooser_spinner)
-    Spinner userType;
+//    @BindView(R.id.chooser_spinner)
+//    Spinner userType;
 
     private TextInputEditText emailInput;
     private TextInputEditText passwordInput;
@@ -84,6 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        r1 = (EditText) findViewById(R.id.name);
+        r2 = (EditText) findViewById(R.id.contact);
+        Firebase.setAndroidContext(getApplicationContext());
+
 
 //        ConnectivityManager cm = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -202,13 +212,34 @@ public class LoginActivity extends AppCompatActivity {
 
 
         register.setOnClickListener(view -> {
+            User user1 = new User();
             mProgress.show();
             hideKeyBoard();
             emailInput = (TextInputEditText) emailWrapper.getEditText();
             passwordInput = (TextInputEditText) passwordWrapper.getEditText();
             String email = emailInput.getText().toString();
             String password = passwordInput.getText().toString();
-            String user = userType.getSelectedItem().toString();
+//            String user = userType.getSelectedItem().toString();
+
+            String name1 = r1.getText().toString();
+            String contact1 = r2.getText().toString();
+
+            if(name1==""|| contact1==""){
+                Toast.makeText(this,"Enter all the fields", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+
+                user1.setName(name1);
+                user1.setMobile(contact1);
+
+//                Firebase firebase = new Firebase(Config.url);
+//                firebase.child("person"+i).setValue(user);
+//                i++;
+                Toast.makeText(this,"Data saved successfully",Toast.LENGTH_SHORT).show();
+            }
+
+
 
             //change was done from here to here
 //            if (user.equals("Driver")) {
@@ -230,13 +261,20 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     String user_id = mAuth.getCurrentUser().getUid();
 
-                    Log.i(LOG_TAG, "User is : " + user);
+                    Log.i(LOG_TAG, "User is : " + "Donor");
+//                    Log.i(LOG_TAG, "User is : " + user);
+//                    User user1 = new User();
 
                     //change was done from here to here
 //                    Boolean isDriver = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
 //                    if (isDriver) {
                         DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id);
-                        user_db.setValue(true);
+//                                user_db.setValue(user1.toString());
+                                  user_db.setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id).setValue(user1);
+
+
+
 //                    } else {
 //                        DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(user_id);
 //                        user_db.setValue(true);

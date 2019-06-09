@@ -13,39 +13,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp">
+
+            <TextView
+                android:id="@+id/txtdashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Dashboard"
+                android:textColor="#fff"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtdashboard"
+                android:text="8 Items"
+                android:textColor="#52BAFF"
+                android:textSize="23dp" />
+
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:src="@drawable/profile" />
 
-                <TextView
-                    android:id="@+id/txtdashboard"
-                    android:text="My Dashboard"
-                    android:textColor="#fff"
-                    android:textSize="30sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtdashboard"
-                    android:text="8 Items"
-                    android:textColor="#52BAFF"
-                    android:textSize="23dp" />
-
-                <ImageView
-                    android:layout_width="62dp"
-                    android:layout_height="62dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="0dp"
-                    android:src="@drawable/profile" />
-
-            </RelativeLayout>
+        </RelativeLayout>
 
             <GridLayout
                 android:layout_marginTop="110dp"
