@@ -47,7 +47,10 @@
             android:label="@string/title_activity_student_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".dashboard" />
-        <activity android:name=".profile"></activity>
+        <activity android:name=".profile" />
+        <activity android:name=".developer" />
+        <activity android:name=".reward" />
+        <activity android:name=".usr_image"></activity>
     </application>
 
 </manifest>

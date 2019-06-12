@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ProgressDialog mProgress;
-
+    DatabaseReference reference;
     @Override
     protected void onStop() {
         super.onStop();
@@ -272,6 +272,8 @@ public class LoginActivity extends AppCompatActivity {
 //                                user_db.setValue(user1.toString());
                                   user_db.setValue(true);
                     FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id).setValue(user1);
+
+
 
 
 

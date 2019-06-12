@@ -25,5 +25,5 @@ public class User {
         this.group = group;
     }
 
-    private String name,mobile,group;
+    public String name,mobile,group;
 }

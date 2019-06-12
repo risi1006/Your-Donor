@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.aditya.bustrack"
         minSdkVersion 21
@@ -29,19 +30,29 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:11.0+'
     implementation 'com.google.firebase:firebase-auth:11.0+'
     implementation 'com.firebase:firebase-client-android:2.4.0'
+    compile 'com.google.maps.android:android-maps-utils:0.5+'
     implementation 'com.google.android.gms:play-services-maps:11.0+'
     implementation 'com.android.support:cardview-v7:27.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:design:27.0.2'
+    implementation 'me.itangqi.waveloadingview:library:0.3.5'
+//    compile 'com.android.support:appcompat-v7:27.0.2'
+//    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:design:27.1.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.google.android.gms:play-services-location:11.0+'
-    compile 'com.android.support:support-compat:27.0.2'
+//    compile 'com.google.android.gms:play-services-location:11.0+'
+//    compile 'com.android.support:support-compat:27.0.2'
     compile 'com.firebase:geofire-android:2.2.0'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
     compile 'com.google.firebase:firebase-messaging:11.0+'
+//    compile 'com.google.firebase:firebase-messaging:11.0+'
+//    compile 'com.google.android.gms:play-services-base:16.1.0'
+//    compile 'com.google.android.gms:play-services-maps:16.1.0'
 
+    implementation 'com.google.firebase:firebase-storage:11.0+'
+    implementation 'com.google.firebase:firebase-auth:11.0+'
 }
 apply plugin: 'com.google.gms.google-services'

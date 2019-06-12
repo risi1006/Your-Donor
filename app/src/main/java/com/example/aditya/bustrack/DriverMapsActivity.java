@@ -1,6 +1,7 @@
 package com.example.aditya.bustrack;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
@@ -156,13 +157,15 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mMapView = mapFragment.getView();
+//        mMapView = mapFragment.getView();   it was here
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        mMapView = mapFragment.getView();
 
         Boolean startFromNotification = getIntent().getBooleanExtra(getString(R.string.launched_via_notification), false);
         if (startFromNotification) {
@@ -177,10 +180,10 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                        studentId = map.get("studentRequest").toString();
+                        studentId = map.get("acceptorRequest").toString();
 
 
-                        Log.e(LOG_TAG, "Student id is " + studentId);
+                        Log.e(LOG_TAG, "Acceptor id is " + studentId);
 
                         DatabaseReference studentLocation = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId).child(studentId).child("l");
                         studentLocation.addValueEventListener(new ValueEventListener() {
@@ -211,43 +214,48 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
         }
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
-        requestRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(DriverMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
-                CharSequence name = getString(R.string.channel_name);
-                String description = getString(R.string.channel_description);
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(DriverMapsActivity.this, channelId);
-                Intent notificationIntent = new Intent(DriverMapsActivity.this, DriverMapsActivity.class);
-                notificationIntent.putExtra(getString(R.string.launched_via_notification), true);
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(DriverMapsActivity.this);
-                stackBuilder.addParentStack(DriverMapsActivity.this);
-                stackBuilder.addNextIntent(notificationIntent);
-                PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(1,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-                builder.setSmallIcon(R.drawable.ic_launcher_foreground)
-                        .setLargeIcon(BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher_foreground))
-                        .setContentTitle(getString(R.string.request_wait_notification))
-                        .setContentText("Tap me to view him/her on the map")
-                        .setContentIntent(notificationPendingIntent)
-                        .setAutoCancel(true)
-                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
-                mNotificationManager.notify(1, builder.build());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        //aaaaaaaaaaaaaaaaaaaaaaaaa
+//        DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
+//        requestRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Toast.makeText(DriverMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
+//                CharSequence name = getString(R.string.channel_name);
+//                String description = getString(R.string.channel_description);
+//                @SuppressLint("InlinedApi") int importance = NotificationManager.IMPORTANCE_DEFAULT;
+////                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(DriverMapsActivity.this, channelId);
+//                Intent notificationIntent = new Intent(DriverMapsActivity.this, DriverMapsActivity.class);
+//                notificationIntent.putExtra(getString(R.string.launched_via_notification), true);
+//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(DriverMapsActivity.this);
+//                stackBuilder.addParentStack(DriverMapsActivity.this);
+//                stackBuilder.addNextIntent(notificationIntent);
+//                PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(1,
+//                        PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//
+//                builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+//                        .setLargeIcon(BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher_foreground))
+//                        .setContentTitle(getString(R.string.request_wait_notification))
+//                        .setContentText("Tap me to view him/her on the map")
+//                        .setContentIntent(notificationPendingIntent)
+//                        .setAutoCancel(true)
+//                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+//                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+//
+//                mNotificationManager.notify(1, builder.build());
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
     }
 
@@ -257,29 +265,20 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         if (!enabled) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setMessage("GPS is disabled in your device. Enable it?")
-                    .setPositiveButton(R.string.enable_gps, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    /** Here it's leading to GPS setting options*/
-                                    Intent callGPSSettingIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                    startActivity(callGPSSettingIntent);
-                                }
-                            }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                }
-                            });
+                    .setPositiveButton(R.string.enable_gps, (dialog, id) -> {
+                        /** Here it's leading to GPS setting options*/
+                        Intent callGPSSettingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(callGPSSettingIntent);
+                    }).setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
                             AlertDialog alert = alertDialogBuilder.create();
                 alert.show();
         }
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectDrawrItem(item);
-                return true;
-            }
+        navigationView.setNavigationItemSelectedListener(item -> {
+            selectDrawrItem(item);
+            return true;
         });
 
     }
@@ -291,41 +290,38 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
             case R.id.link_bus:
                 AlertDialog.Builder metaDialog = new AlertDialog.Builder(DriverMapsActivity.this);
                 metaDialog.setTitle(getString(R.string.selectBusTitle))
-                        .setItems(R.array.bus_numbers, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                switch (i) {
-                                    case 0:
-                                        bus_num = 2;
-                                        break;
-                                    case 1:
-                                        bus_num = 8;
-                                        break;
-                                    case 2:
-                                        bus_num = 11;
-                                        break;
-                                    case 3:
-                                        bus_num = 23;
-                                        break;
-                                    case 4:
-                                        bus_num = 21;
-                                        break;
-                                    case 5:
-                                        bus_num = 81;
-                                        break;
-                                    case 6:
-                                        bus_num = 111;
-                                        break;
-                                    case 7:
-                                        bus_num = 231;
-                                        break;
+                        .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
+                            switch (i) {
+                                case 0:
+                                    bus_num = 2;
+                                    break;
+                                case 1:
+                                    bus_num = 8;
+                                    break;
+                                case 2:
+                                    bus_num = 11;
+                                    break;
+                                case 3:
+                                    bus_num = 23;
+                                    break;
+                                case 4:
+                                    bus_num = 21;
+                                    break;
+                                case 5:
+                                    bus_num = 81;
+                                    break;
+                                case 6:
+                                    bus_num = 111;
+                                    break;
+                                case 7:
+                                    bus_num = 231;
+                                    break;
 
 
-                                }
-                                String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
-                                ref.setValue("Donor");
                             }
+                            String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
+                            ref.setValue("Donor");
                         });
                 metaDialog.show();
                 break;

@@ -93,8 +93,10 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     private boolean driverFound = false;
     private SharedPreferences prefs;
     private Marker mBusMarker;
+    private Marker mBusMarker1;
     private ProgressBar spinner;
     String name3="";
+    String don,no;
     DatabaseReference doornail;
     DatabaseReference ref;
     @Override
@@ -220,8 +222,8 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
 
 
-
-
+//224,244,250
+//                Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
                 DatabaseReference busLocation = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
                 busLocation.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -232,28 +234,6 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                             double lon = 0;
                             if (map.get(0) != null) {
                                 lat = Double.parseDouble(map.get(0).toString());
-
-//                               myParentNode
-                                       DatabaseReference def= dataSnapshot.getRef();
-                                       myParentNode = def.getParent().getKey();
-                                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
-                                doornail.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        name3 = dataSnapshot.getValue().toString();
-                                        Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-
-
-
-
                             }
 
                             if (map.get(1) != null) {
@@ -261,8 +241,24 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                             }
 
                             LatLng busLocation = new LatLng(lat, lon);
+                            DatabaseReference def= dataSnapshot.getRef();
+                            myParentNode = def.getParent().getKey();
+//                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+                            doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+                            doornail.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    name3 = dataSnapshot.getValue().toString();
+//                                    Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                             if (mBusMarker != null) mBusMarker.remove();
-                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title(myParentNode));
+                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title(name3));
 
 
 
@@ -347,6 +343,65 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                             .child(busDriverKey)
                                             .child("acceptorRequest");
                                     driverRef.setValue(studentId);
+
+
+
+
+                                    //This is something to add map of all the user
+                                    DatabaseReference busLocation1 = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
+                                    busLocation1.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshott) {
+                                            if (dataSnapshott.exists()) {
+                                                List<Object> map = (List<Object>) dataSnapshott.getValue();
+                                                double lat1 = 0;
+                                                double lon1 = 0;
+                                                if (map.get(0) != null) {
+                                                    lat1 = Double.parseDouble(map.get(0).toString());
+                                                }
+
+                                                if (map.get(1) != null) {
+                                                    lon1 = Double.parseDouble(map.get(1).toString());
+                                                }
+
+                                                LatLng busLocation1 = new LatLng(lat1, lon1);
+                                                DatabaseReference def1= dataSnapshott.getRef();
+                                                myParentNode = def1.getParent().getKey();
+//                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+                                                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+                                                doornail.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        String name4 = dataSnapshot.getValue().toString();
+                                                        String[] risi= name4.split(",");
+                                                        don = risi[0].substring(1);
+                                                        no = risi[1];
+                                    Toast.makeText(StudentMapsActivity.this, don+" || "+no, Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+//                                                if (mBusMarker1 != null) mBusMarker1.remove();
+                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no));
+
+
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+
+                                    Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
+
 
                                     DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
                                     GeoFire geofire = new GeoFire(locationAdd);
