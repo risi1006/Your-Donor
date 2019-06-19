@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="58dp"
                 android:layout_marginBottom="22dp"
-                           android:background="@color/colorPrimary"
+                android:background="@color/colorPrimary"
                 />
 
             <Button
@@ -54,8 +55,6 @@
                 android:layout_gravity="center|left"
                 android:text="@string/Link_bus"
                 android:visibility="gone"/>
-
-
         </FrameLayout>
 
     </android.support.design.widget.CoordinatorLayout>

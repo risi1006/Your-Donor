@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Save is safe</string>
+    <string name="app_name">Your Donor</string>
     <string name="gps_dialog_title">GPS...</string>
     <string name="gps_enable_message"><![CDATA[GPS is not enable, Please enable it in next window.<br>]]></string>
     <string name="username">Username/Email</string>
@@ -63,5 +63,7 @@
         <item>"AB-ve"</item>
         <item>"O+ve"</item>
         <item>"O-ve"</item>
+        <item>"Hospital"</item>
+        <item>"Donor"</item>
     </string-array>
 </resources>

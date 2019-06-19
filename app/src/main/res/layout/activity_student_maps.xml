@@ -27,17 +27,17 @@
                 android:layout_height="match_parent"
                 tools:context="com.example.aditya.bustrack.StudentMapsActivity" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/locate_bus_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_marginBottom="72dp"
-                android:background="@color/white"
-                android:src="@drawable/activity"
-                app:backgroundTint="@color/white"
-                android:layout_marginRight="4dp"
-             />
+            <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/locate_bus_fab"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="bottom|right"-->
+                <!--android:layout_marginBottom="72dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:src="@drawable/activity"-->
+                <!--app:backgroundTint="@color/white"-->
+                <!--android:layout_marginRight="4dp"-->
+             <!--/>-->
             <ProgressBar
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:layout_width="match_parent"

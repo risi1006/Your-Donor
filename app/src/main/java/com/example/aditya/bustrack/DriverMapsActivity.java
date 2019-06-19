@@ -68,7 +68,7 @@ import butterknife.ButterKnife;
 public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-
+//*********************************************Definging the buttons of the drawer*********************************************************************
     @BindView(R.id.logout_btn_driver)
     Button mLogout;
     @BindView(R.id.link_bus)
@@ -80,7 +80,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
-
+//*********************************************Defining the variables******************************************************************************
     public static final String LOG_TAG = DriverMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
 
@@ -127,20 +127,20 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //First check if GPS is enabled
+//        DriverMapsActivity.setVisibility(View.INVISIBLE);
+//*************************************First check if GPS is enabled************************************************************************************
         turnGPSOn();
 
 
         setContentView(R.layout.activity_driver_maps);
 
         ButterKnife.bind(this);
-        // Toolbar :: Transparent
+//************************************* Toolbar :: Transparent******************************************************************************************
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
         setSupportActionBar(mToolbar);
 
         Window window = this.getWindow();
-        // Status bar :: Transparent
+//************************************* Status bar :: Transparent**************************************************************************************
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(Color.TRANSPARENT);
@@ -152,7 +152,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         setupDrawerContent(mNavigationView);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+//************************************** Obtain the SupportMapFragment and get notified when the map is ready to be used.*******************************
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -216,7 +216,8 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-        //aaaaaaaaaaaaaaaaaaaaaaaaa
+//*********************************************Garbage***********************************************************************************************
+
 //        DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
 //        requestRef.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -255,10 +256,11 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 //
 //            }
 //        });
-        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+//*****************************************************************************************************************************************************
 
     }
-
+//*************************************Function to turn GPS on******************************************************************************************
     public void turnGPSOn() {
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -275,6 +277,8 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
+
+//***************************************set up drawer*************************************************************************************************
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(item -> {
             selectDrawrItem(item);
@@ -284,8 +288,8 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-
-    private void selectDrawrItem(MenuItem item) {
+//***************************************Select drawer item********************************************************************************************
+  private void selectDrawrItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.link_bus:
                 AlertDialog.Builder metaDialog = new AlertDialog.Builder(DriverMapsActivity.this);
@@ -314,6 +318,12 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                                     bus_num = 111;
                                     break;
                                 case 7:
+                                    bus_num = 231;
+                                    break;
+                                case 8:
+                                    bus_num = 111;
+                                    break;
+                                case 9:
                                     bus_num = 231;
                                     break;
 

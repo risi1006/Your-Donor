@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,8 +71,8 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     DrawerLayout mDrawerLayout;
     @BindView(R.id.nav_view_student)
     NavigationView mNavigationView;
-    @BindView(R.id.locate_bus_fab)
-    FloatingActionButton locateBus;
+//    @BindView(R.id.locate_bus_fab)
+//    FloatingActionButton locateBus;
 
     public static final String LOG_TAG = StudentMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
@@ -96,7 +97,10 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     private Marker mBusMarker1;
     private ProgressBar spinner;
     String name3="";
-    String don,no;
+    int hospitall = 0;
+    int busNo;
+    int bloodbankk = 0;
+    String don,no,fina="";
     DatabaseReference doornail;
     DatabaseReference ref;
     @Override
@@ -105,6 +109,31 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_student_maps);
         ButterKnife.bind(this);
 
+//*****************************************************Adding timer for Donor activity***************************************************************
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(() -> {
+            Intent intent = new Intent(StudentMapsActivity.this, DriverMapsActivity.class);
+            startActivity(intent);
+            finish();
+
+        }, 120000L);
+
+
+
+//*****************************************************This is the details of the card**********************************************************************************
+
+
+
+
+//
+
+//        Bundle bundle = getIntent().getExtras();
+//         hospitall = bundle.getInt("hospital");
+////        if(hospitall==1)
+//        {
+//            bus_num=111;
+//
+//        }
         // Toolbar :: Transparent
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
         setSupportActionBar(mToolbar);
@@ -168,6 +197,12 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                 case 7:
                                     bus_num = 231;
                                     break;
+                                case 8:
+                                    bus_num = 111;
+                                    break;
+                                case 9:
+                                    bus_num = 231;
+                                    break;
 
                             }
 
@@ -187,8 +222,9 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
             //
         }
-
-        locateBus = (FloatingActionButton) findViewById(R.id.locate_bus_fab);
+//********************************************************************************
+//        locateBus = (FloatingActionButton) findViewById(R.id.locate_bus_fab);
+        //********************************************************************
 //        locateBus.setBackgroundColor(getResources().getColor(R.color.white));
 //        locateBus.setImageResource(R.drawable.activity);
 
@@ -210,99 +246,109 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 //            }
 //        });
 
-
-        locateBus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(StudentMapsActivity.this, "Wait Please...", Toast.LENGTH_SHORT).show();
-                if (busDriverKey.isEmpty()){
-                    Toast.makeText(StudentMapsActivity.this, "Sorry, No Donor is not online!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-
-
-//224,244,250
-//                Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
-                DatabaseReference busLocation = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
-                busLocation.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            List<Object> map = (List<Object>) dataSnapshot.getValue();
-                            double lat = 0;
-                            double lon = 0;
-                            if (map.get(0) != null) {
-                                lat = Double.parseDouble(map.get(0).toString());
-                            }
-
-                            if (map.get(1) != null) {
-                                lon = Double.parseDouble(map.get(1).toString());
-                            }
-
-                            LatLng busLocation = new LatLng(lat, lon);
-                            DatabaseReference def= dataSnapshot.getRef();
-                            myParentNode = def.getParent().getKey();
-//                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
-                            doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
-                            doornail.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    name3 = dataSnapshot.getValue().toString();
-//                                    Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                            if (mBusMarker != null) mBusMarker.remove();
-                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title(name3));
-
-
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+//********************************************************************************************************************************************************
+//        locateBus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(StudentMapsActivity.this, "Wait Please...", Toast.LENGTH_SHORT).show();
+//                if (busDriverKey.isEmpty()){
+//                    Toast.makeText(StudentMapsActivity.this, "Sorry, No Donor is not online!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
 //
-//                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(donordet);
-//                doornail.addValueEventListener(new ValueEventListener() {
+//
+//
+////224,244,250
+////                Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
+//                DatabaseReference busLocation = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
+//                busLocation.addValueEventListener(new ValueEventListener() {
 //                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot1) {
-//                        String name3 = dataSnapshot1.child("name").getValue().toString();
-////                        String mobile3 = dataSnapshot.child("mobile").getValue().toString();
-//                        Toast.makeText(StudentMapsActivity.this,name3,Toast.LENGTH_SHORT).show();
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        if (dataSnapshot.exists()) {
+//                            List<Object> map = (List<Object>) dataSnapshot.getValue();
+//                            double lat = 0;
+//                            double lon = 0;
+//                            if (map.get(0) != null) {
+//                                lat = Double.parseDouble(map.get(0).toString());
+//                            }
+//
+//                            if (map.get(1) != null) {
+//                                lon = Double.parseDouble(map.get(1).toString());
+//                            }
+//
+//                            LatLng busLocation = new LatLng(lat, lon);
+//                            DatabaseReference def= dataSnapshot.getRef();
+//                            myParentNode = def.getParent().getKey();
+////                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+//                            doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+//                            doornail.addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(DataSnapshot dataSnapshot) {
+//                                    name3 = dataSnapshot.getValue().toString();
+////                                    Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(DatabaseError databaseError) {
+//
+//                                }
+//                            });
+//                            if (mBusMarker != null) mBusMarker.remove();
+//                            mBusMarker = mMap.addMarker(new MarkerOptions().position(busLocation).title(name3));
+//
+//
+//
+//                        }
 //                    }
 //
 //                    @Override
 //                    public void onCancelled(DatabaseError databaseError) {
-//                        Toast.makeText(StudentMapsActivity.this,"Error occured",Toast.LENGTH_SHORT).show();
+//
 //                    }
 //                });
-
-            }
-        });
+////
+////                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(donordet);
+////                doornail.addValueEventListener(new ValueEventListener() {
+////                    @Override
+////                    public void onDataChange(DataSnapshot dataSnapshot1) {
+////                        String name3 = dataSnapshot1.child("name").getValue().toString();
+//////                        String mobile3 = dataSnapshot.child("mobile").getValue().toString();
+////                        Toast.makeText(StudentMapsActivity.this,name3,Toast.LENGTH_SHORT).show();
+////                    }
+////
+////                    @Override
+////                    public void onCancelled(DatabaseError databaseError) {
+////                        Toast.makeText(StudentMapsActivity.this,"Error occured",Toast.LENGTH_SHORT).show();
+////                    }
+////                });
+//
+//            }
+//        });
+//*************************************************************************************************************************************************************
     }
+//************************Hospital************************************
+
+    //********************Hospital************************************
+
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.eta:
-                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("request_eta");
-                        GeoFire geoFire = new GeoFire(reference);
-                        geoFire.setLocation(uid, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                        // getDriverLocation();
+//                    case R.id.eta:
+//                        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("request_eta");
+//                        GeoFire geoFire = new GeoFire(reference);
+//                        geoFire.setLocation(uid, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+//                        // getDriverLocation();
+//
+//                        break;
 
-                        break;
+
+
+                        //here for bloodbank and hospital
+
                     case R.id.request_wait:
                         if (prefs.getInt(getString(R.string.bus_no), 0)==0){
                             Toast.makeText(StudentMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
@@ -318,7 +364,10 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                         mMap.addMarker(new MarkerOptions().position(etaLocation));
                         Toast.makeText(StudentMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
 
-                        int busNo = prefs.getInt(getString(R.string.bus_no), 0);
+                        busNo = prefs.getInt(getString(R.string.bus_no), 0);
+
+
+
                         if (busNo==0){
                             Toast.makeText(StudentMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
                             break;
@@ -376,6 +425,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                         String[] risi= name4.split(",");
                                                         don = risi[0].substring(1);
                                                         no = risi[1];
+
                                     Toast.makeText(StudentMapsActivity.this, don+" || "+no, Toast.LENGTH_SHORT).show();
                                                     }
 
@@ -385,8 +435,10 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                     }
                                                 });
 //                                                if (mBusMarker1 != null) mBusMarker1.remove();
-                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no));
+                                                if(!fina.equals(don+" "+no)){
 
+                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no));
+                                                fina = don+" "+no;}
 
 
                                             }
@@ -463,6 +515,12 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                             bus_num = 111;
                                             break;
                                         case 7:
+                                            bus_num = 231;
+                                            break;
+                                        case 8:
+                                            bus_num = 111;
+                                            break;
+                                        case 9:
                                             bus_num = 231;
                                             break;
 

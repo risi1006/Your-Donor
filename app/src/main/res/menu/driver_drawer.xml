@@ -4,7 +4,7 @@
         <item
             android:id="@+id/link_bus"
             android:title="@string/Link_gropu"
-            android:icon="@mipmap/ic_directions_bus_black_24dp"/>
+            />
 
         <item
             android:id="@+id/logout"

@@ -24,30 +24,23 @@
                 android:id="@+id/txtdashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Dashboard"
                 android:textColor="#fff"
-                android:textSize="30sp" />
+                android:textSize="35sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtdashboard"
-                android:text="8 Items"
+                android:text="My Dashboard"
                 android:textColor="#52BAFF"
                 android:textSize="23dp" />
 
-            <ImageView
-                android:id="@+id/usrimg"
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="0dp"
-                android:src="@drawable/profile" />
+
 
         </RelativeLayout>
-        
+
+
+
 
             <GridLayout
                 android:layout_marginTop="110dp"
@@ -58,6 +51,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+                <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:visibility="invisible"-->
+                <!--android:id="@+id/ritu"-->
+                <!--android:src="@drawable/rewardbkg"/>-->
+
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -67,6 +69,7 @@
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
