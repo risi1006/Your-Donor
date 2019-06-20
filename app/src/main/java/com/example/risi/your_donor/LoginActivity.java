@@ -28,8 +28,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import butterknife.BindView;
@@ -40,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     User user1 = new User();
     private CoordinatorLayout coordinatorLayout;
     private AnimationDrawable animationDrawable;
-
+    DatabaseReference user_no;
+    int no_user=0;
     @BindView(R.id.text_input_layout_email)
     TextInputLayout emailWrapper;
     @BindView(R.id.text_input_layout_password)
@@ -83,6 +87,33 @@ public class LoginActivity extends AppCompatActivity {
         r1 = (EditText) findViewById(R.id.name);
         r2 = (EditText) findViewById(R.id.contact);
         Firebase.setAndroidContext(getApplicationContext());
+        user_no  = FirebaseDatabase.getInstance().getReference();
+
+
+
+//*****************************Finding  no of users******************************************************************************
+
+        user_no = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor");
+        user_no.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot ds: dataSnapshot.getChildren())
+                    {   no_user++;
+                    }
+                }
+                Toast.makeText(LoginActivity.this ,String.valueOf(no_user) ,Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        user_no = FirebaseDatabase.getInstance().getReference();
+//*****************************End of find **************************************************************************************
 
 
 //        ConnectivityManager cm = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
@@ -261,7 +292,11 @@ public class LoginActivity extends AppCompatActivity {
                         DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id);
 //                                user_db.setValue(user1.toString());
                                   user_db.setValue(true);
+                    user1.setUser_n(String.valueOf(no_user+1));
                     FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id).setValue(user1);
+                    user_no.child("user_no").child(String.valueOf(no_user+1)).setValue(user_id);
+
+                    no_user=0;
 
 
 

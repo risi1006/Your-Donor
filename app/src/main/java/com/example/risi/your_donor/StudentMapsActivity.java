@@ -95,7 +95,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
     int hospitall = 0;
     int busNo;
     int bloodbankk = 0;
-    String don,no,fina="";
+    String don,no,fina="",id;
     DatabaseReference doornail;
     DatabaseReference ref;
     @Override
@@ -420,8 +420,9 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                         String[] risi= name4.split(",");
                                                         don = risi[0].substring(1);
                                                         no = risi[1];
+                                                        id = risi[2];
 
-                                    Toast.makeText(StudentMapsActivity.this, don+" || "+no, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StudentMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
@@ -430,10 +431,10 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                     }
                                                 });
 //                                                if (mBusMarker1 != null) mBusMarker1.remove();
-                                                if(!fina.equals(don+" "+no)){
+                                                if(!fina.equals(don+" "+no+" "+id)){
 
-                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no));
-                                                fina = don+" "+no;}
+                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no+" "+id));
+                                                fina = don+" "+no+" "+id;}
 
 
                                             }

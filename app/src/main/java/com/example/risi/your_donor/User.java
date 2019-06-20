@@ -25,5 +25,17 @@ public class User {
         this.group = group;
     }
 
-    public String name,mobile,group;
+    public String name;
+    public String mobile;
+    public String group;
+
+    public String getUser_n() {
+        return user_n;
+    }
+
+    public void setUser_n(String user_n) {
+        this.user_n = user_n;
+    }
+
+    public String user_n;
 }

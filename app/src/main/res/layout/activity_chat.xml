@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#4B4A57"
     android:layout_height="match_parent"
     tools:context=".chat">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/usermsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -15,44 +16,106 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="Write your message here"
         android:inputType="textPersonName"
-       android:hint="Write your message here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.143"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.079" />
+        app:layout_constraintVertical_bias="0.996" />
 
-    <Button
-        android:id="@+id/button2"
+
+
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="337dp"
+        android:layout_height="425dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#4B4A57"
+        android:gravity="bottom"
+        android:hint="Your Message will appear"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622" />
+
+    <EditText
+        android:id="@+id/rec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.075" />
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="368dp"
-        android:layout_height="450dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Id of the receiver"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.054" />
+
+    <Button
+        android:id="@+id/join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="join"
+        android:background="#34333c"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.767"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <Button
+        android:id="@+id/clear"
+        android:layout_width="57dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="clr"
+        android:background="#34333c"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <ImageButton
+        android:id="@+id/send"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#4B4A57"
+        android:src="@drawable/send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.998"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

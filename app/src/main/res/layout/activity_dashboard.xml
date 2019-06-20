@@ -61,7 +61,7 @@
                 <!--android:src="@drawable/rewardbkg"/>-->
 
                 <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
@@ -95,7 +95,7 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
@@ -121,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Blood nearby"
+                            android:text="Blood\nNearby"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -187,7 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Hospital Nearby"
+                            android:text="Hospital \nNearby"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -286,7 +286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Call lifelines"
+                            android:text="Contact\n lifelines"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -319,7 +319,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="About Developer"
+                            android:text="Developer"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 

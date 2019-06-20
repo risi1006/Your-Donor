@@ -115,7 +115,7 @@ public class dashboard extends AppCompatActivity {
         reference.child("reward").child(uId1).child("hospital2").child("name").setValue("BHU");
         reference.child("reward").child(uId1).child("hospital2").child("mobile").setValue("02");
 
-        reference.child("chat").child(uId1).child("chatroom").setValue(" ");
+        reference.child("chat").child(uId1).child("chatroom").setValue("");
 
         bloodbank.setOnClickListener(view -> {
             Intent intent = new Intent(dashboard.this, StudentMapsActivity.class);
@@ -124,9 +124,9 @@ public class dashboard extends AppCompatActivity {
         });
 
         lifeline.setOnClickListener(view -> {
-            Toast.makeText(dashboard.this, "Under development phase", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(dashboard.this, chat.class);
-//            startActivity(intent);
+            Toast.makeText(dashboard.this, "Currently Chat is available", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(dashboard.this, chat.class);
+            startActivity(intent);
         });
 
 
