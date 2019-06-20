@@ -1,4 +1,4 @@
-package com.example.aditya.bustrack;
+package com.example.risi.your_donor;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,12 +18,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class reward extends AppCompatActivity {
     DatabaseReference reference;
     ListView l1;
+    TextView txtProgress1;
+    TextView txtProgress2;
+    ProgressBar progressBar1;
+    ProgressBar progressBar2;
     User user;
+    int i = 0;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
     @Override
@@ -29,6 +35,9 @@ public class reward extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
 
+//        progressBar1 = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+        txtProgress2 = (TextView)findViewById(R.id.txtProgress2);
 //*****************************************************Adding timer for Donor activity***************************************************************
         Handler mHandler = new Handler();
         mHandler.postDelayed(() -> {
@@ -47,6 +56,9 @@ public class reward extends AppCompatActivity {
         user = new User();
         String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+
+
         String ref = "Registration No"+"                         "+"Hospital";
         list = new ArrayList<>();
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
@@ -60,13 +72,18 @@ public class reward extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot ds: dataSnapshot.getChildren())
-                {
+                {   i++;
                     user = ds.getValue(User.class);
                     String repeated = new String(new char[20]).replace("\0", " ");
                     list.add(user.getMobile().toString()+repeated+user.getName().toString());
                 }
                 l1.setAdapter(adapter);
+
+
+                progressBar2.setProgress(i*10);
+                txtProgress2.setText(i*10 + "Pts");
             }
+
 
 
             @Override

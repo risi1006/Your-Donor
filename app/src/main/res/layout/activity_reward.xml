@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".reward">
 
+
+
     <ImageView
         android:id="@+id/rew"
         android:layout_width="match_parent"
@@ -22,7 +24,48 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
+        app:layout_constraintVertical_bias="0.07">
+
+    </ImageView>
+
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:indeterminate="false"
+        android:max="1000"
+        android:progress="0"
+        android:progressDrawable="@drawable/custom_progressbar_drawable"
+        android:secondaryProgress="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.312" />
+
+
+    <TextView
+        android:id="@+id/txtProgress2"
+        android:layout_width="30sp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/progressBar2"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.339" />
 
     <ListView
         android:id="@+id/listview"
@@ -37,7 +80,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>

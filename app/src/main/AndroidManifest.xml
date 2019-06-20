@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aditya.bustrack">
+    package="com.example.risi.your_donor">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -21,14 +21,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.example.risi.your_donor.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity" />
+        <activity android:name="com.example.risi.your_donor.MapActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,22 +42,22 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".DriverMapsActivity"
+            android:name="com.example.risi.your_donor.DriverMapsActivity"
             android:label="@string/title_activity_driver_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".StudentMapsActivity"
+            android:name="com.example.risi.your_donor.StudentMapsActivity"
             android:label="@string/title_activity_student_maps"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dashboard" />
-        <activity android:name=".profile" />
-        <activity android:name=".developer" />
-        <activity android:name=".reward" />
+        <activity android:name="com.example.risi.your_donor.dashboard" />
+        <activity android:name="com.example.risi.your_donor.profile" />
+        <activity android:name="com.example.risi.your_donor.developer" />
+        <activity android:name="com.example.risi.your_donor.reward" />
         <activity android:name=".usr_image" />
 
-        <service android:name=".MyService" />
+        <service android:name="com.example.risi.your_donor.MyService" />
 
-        <activity android:name=".chat"></activity>
+        <activity android:name="com.example.risi.your_donor.chat"></activity>
     </application>
 
 </manifest>

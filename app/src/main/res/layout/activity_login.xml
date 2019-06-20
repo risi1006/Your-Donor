@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:background="#a42824"
-    tools:context="com.example.aditya.bustrack.LoginActivity" >
+    tools:context="com.example.risi.your_donor.LoginActivity" >
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
