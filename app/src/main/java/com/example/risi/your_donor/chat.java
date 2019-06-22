@@ -131,11 +131,15 @@ public class chat extends AppCompatActivity {
                     mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString());
                     Toast.makeText(chat.this,"same", Toast.LENGTH_SHORT).show();
 
+
                 }
                 else {
                     Toast.makeText(chat.this,"different", Toast.LENGTH_SHORT).show();
-                mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString());}
+                mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString());
+
+                }
                 usermsg.setText("");
+
             }
         });
 
@@ -146,6 +150,7 @@ public class chat extends AppCompatActivity {
                 rew.removeValue();
                 myText.setText("");
                 cnt = 0;
+
                 mydatabase.child(String.valueOf(cnt)).setValue(" ");
                 rew = FirebaseDatabase.getInstance().getReference();
             }

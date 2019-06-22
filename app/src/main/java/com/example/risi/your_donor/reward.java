@@ -41,7 +41,7 @@ public class reward extends AppCompatActivity {
 //*****************************************************Adding timer for Donor activity***************************************************************
         Handler mHandler = new Handler();
         mHandler.postDelayed(() -> {
-            Intent intent = new Intent(reward.this, DriverMapsActivity.class);
+            Intent intent = new Intent(reward.this, DonorMapsActivity.class);
             startActivity(intent);
             finish();
         }, 60000L);

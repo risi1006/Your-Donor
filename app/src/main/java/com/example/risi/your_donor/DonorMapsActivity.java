@@ -2,13 +2,17 @@ package com.example.risi.your_donor;
 
 import android.Manifest;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.RingtoneManager;
 import android.provider.Settings;
 
 import android.support.annotation.NonNull;
@@ -16,6 +20,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +32,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -55,7 +61,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
 //*********************************************Definging the buttons of the drawer*********************************************************************
@@ -71,7 +77,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     NavigationView mNavigationView;
 
 //*********************************************Defining the variables******************************************************************************
-    public static final String LOG_TAG = DriverMapsActivity.class.getSimpleName();
+    public static final String LOG_TAG = DonorMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
 
     private GoogleMap mMap;
@@ -117,7 +123,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        DriverMapsActivity.setVisibility(View.INVISIBLE);
+//        DonorMapsActivity.setVisibility(View.INVISIBLE);
 //*************************************First check if GPS is enabled************************************************************************************
         turnGPSOn();
 
@@ -135,8 +141,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(Color.TRANSPARENT);
 
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 
         setupDrawerContent(mNavigationView);
@@ -208,44 +213,44 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
 //*********************************************Garbage***********************************************************************************************
 
-//        DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
-//        requestRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Toast.makeText(DriverMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
-//                CharSequence name = getString(R.string.channel_name);
-//                String description = getString(R.string.channel_description);
+        DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
+        requestRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Toast.makeText(DonorMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
+                CharSequence name = getString(R.string.channel_name);
+                String description = getString(R.string.channel_description);
 //                @SuppressLint("InlinedApi") int importance = NotificationManager.IMPORTANCE_DEFAULT;
-////                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//
-//                NotificationCompat.Builder builder = new NotificationCompat.Builder(DriverMapsActivity.this, channelId);
-//                Intent notificationIntent = new Intent(DriverMapsActivity.this, DriverMapsActivity.class);
-//                notificationIntent.putExtra(getString(R.string.launched_via_notification), true);
-//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(DriverMapsActivity.this);
-//                stackBuilder.addParentStack(DriverMapsActivity.this);
-//                stackBuilder.addNextIntent(notificationIntent);
-//                PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(1,
-//                        PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//
-//                builder.setSmallIcon(R.drawable.ic_launcher_foreground)
-//                        .setLargeIcon(BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher_foreground))
-//                        .setContentTitle(getString(R.string.request_wait_notification))
-//                        .setContentText("Tap me to view him/her on the map")
-//                        .setContentIntent(notificationPendingIntent)
-//                        .setAutoCancel(true)
-//                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
-//                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-//
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(DonorMapsActivity.this, channelId);
+                Intent notificationIntent = new Intent(DonorMapsActivity.this, DonorMapsActivity.class);
+                notificationIntent.putExtra(getString(R.string.launched_via_notification), true);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(DonorMapsActivity.this);
+                stackBuilder.addParentStack(DonorMapsActivity.this);
+                stackBuilder.addNextIntent(notificationIntent);
+                PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(1,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setLargeIcon(BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher_foreground))
+                        .setContentTitle(getString(R.string.request_wait_notification))
+                        .setContentText("Tap me to view him/her on the map")
+                        .setContentIntent(notificationPendingIntent)
+                        .setAutoCancel(true)
+                        .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
 //                mNotificationManager.notify(1, builder.build());
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 //*****************************************************************************************************************************************************
 
@@ -282,7 +287,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
   private void selectDrawrItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.link_bus:
-                AlertDialog.Builder metaDialog = new AlertDialog.Builder(DriverMapsActivity.this);
+                AlertDialog.Builder metaDialog = new AlertDialog.Builder(DonorMapsActivity.this);
                 metaDialog.setTitle(getString(R.string.selectBusTitle))
                         .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
                             switch (i) {
@@ -331,7 +336,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 editor.remove(getString(R.string.isDriver));
                 editor.commit();
 
-                Intent intent = new Intent(DriverMapsActivity.this, LoginActivity.class);
+                Intent intent = new Intent(DonorMapsActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;

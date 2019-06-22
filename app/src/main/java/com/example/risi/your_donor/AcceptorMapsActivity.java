@@ -57,7 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StudentMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class AcceptorMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     @BindView(R.id.toolbar)
@@ -69,7 +69,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 //    @BindView(R.id.locate_bus_fab)
 //    FloatingActionButton locateBus;
 
-    public static final String LOG_TAG = StudentMapsActivity.class.getSimpleName();
+    public static final String LOG_TAG = AcceptorMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
 
     private GoogleMap mMap;
@@ -107,7 +107,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 //*****************************************************Adding timer for Donor activity***************************************************************
         Handler mHandler = new Handler();
         mHandler.postDelayed(() -> {
-            Intent intent = new Intent(StudentMapsActivity.this, DriverMapsActivity.class);
+            Intent intent = new Intent(AcceptorMapsActivity.this, DonorMapsActivity.class);
             startActivity(intent);
             finish();
 
@@ -162,7 +162,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
         boolean firstTime = prefs.getBoolean(getString(R.string.student_maps_first_time_launch), true);
         if (firstTime) {
 
-            AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(StudentMapsActivity.this);
+            AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
             metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
                     .setItems(R.array.bus_numbers, new DialogInterface.OnClickListener() {
                         @Override
@@ -245,16 +245,16 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 //        locateBus.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Toast.makeText(StudentMapsActivity.this, "Wait Please...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AcceptorMapsActivity.this, "Wait Please...", Toast.LENGTH_SHORT).show();
 //                if (busDriverKey.isEmpty()){
-//                    Toast.makeText(StudentMapsActivity.this, "Sorry, No Donor is not online!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(AcceptorMapsActivity.this, "Sorry, No Donor is not online!", Toast.LENGTH_LONG).show();
 //                    return;
 //                }
 //
 //
 //
 ////224,244,250
-////                Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
+////                Toast.makeText(AcceptorMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
 //                DatabaseReference busLocation = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
 //                busLocation.addValueEventListener(new ValueEventListener() {
 //                    @Override
@@ -274,13 +274,13 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 //                            LatLng busLocation = new LatLng(lat, lon);
 //                            DatabaseReference def= dataSnapshot.getRef();
 //                            myParentNode = def.getParent().getKey();
-////                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+////                            Toast.makeText(AcceptorMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
 //                            doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
 //                            doornail.addValueEventListener(new ValueEventListener() {
 //                                @Override
 //                                public void onDataChange(DataSnapshot dataSnapshot) {
 //                                    name3 = dataSnapshot.getValue().toString();
-////                                    Toast.makeText(StudentMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
+////                                    Toast.makeText(AcceptorMapsActivity.this, name3, Toast.LENGTH_SHORT).show();
 //                                }
 //
 //                                @Override
@@ -308,12 +308,12 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 ////                    public void onDataChange(DataSnapshot dataSnapshot1) {
 ////                        String name3 = dataSnapshot1.child("name").getValue().toString();
 //////                        String mobile3 = dataSnapshot.child("mobile").getValue().toString();
-////                        Toast.makeText(StudentMapsActivity.this,name3,Toast.LENGTH_SHORT).show();
+////                        Toast.makeText(AcceptorMapsActivity.this,name3,Toast.LENGTH_SHORT).show();
 ////                    }
 ////
 ////                    @Override
 ////                    public void onCancelled(DatabaseError databaseError) {
-////                        Toast.makeText(StudentMapsActivity.this,"Error occured",Toast.LENGTH_SHORT).show();
+////                        Toast.makeText(AcceptorMapsActivity.this,"Error occured",Toast.LENGTH_SHORT).show();
 ////                    }
 ////                });
 //
@@ -346,7 +346,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                     case R.id.request_wait:
                         if (prefs.getInt(getString(R.string.bus_no), 0)==0){
-                            Toast.makeText(StudentMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AcceptorMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
                             break;
                         }
                         spinner.setVisibility(View.VISIBLE);
@@ -357,14 +357,14 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                         etaLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                         mMap.addMarker(new MarkerOptions().position(etaLocation));
-                        Toast.makeText(StudentMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AcceptorMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
 
                         busNo = prefs.getInt(getString(R.string.bus_no), 0);
 
 
 
                         if (busNo==0){
-                            Toast.makeText(StudentMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AcceptorMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
                             break;
                         }
                         DatabaseReference busRef = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(busNo));
@@ -411,7 +411,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                 LatLng busLocation1 = new LatLng(lat1, lon1);
                                                 DatabaseReference def1= dataSnapshott.getRef();
                                                 myParentNode = def1.getParent().getKey();
-//                            Toast.makeText(StudentMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(AcceptorMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
                                                 doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
                                                 doornail.addValueEventListener(new ValueEventListener() {
                                                     @Override
@@ -422,7 +422,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                                                         no = risi[1];
                                                         id = risi[2];
 
-                                    Toast.makeText(StudentMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
                                                     }
 
                                                     @Override
@@ -448,7 +448,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
 
 
-                                    Toast.makeText(StudentMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AcceptorMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
 
 
                                     DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
@@ -485,7 +485,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
 
                     case R.id.link_bus:
 
-                        AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(StudentMapsActivity.this);
+                        AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
                         metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
                                 .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
                                     switch (i) {
@@ -540,7 +540,7 @@ public class StudentMapsActivity extends AppCompatActivity implements OnMapReady
                         editor.remove(getString(R.string.bus_no));
                         editor.commit();
 
-                        Intent intent = new Intent(StudentMapsActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(AcceptorMapsActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                         break;

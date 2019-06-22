@@ -5,8 +5,21 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 public class MyService extends Service {
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+//        for(int i=0;i<100;i++)
+//        {
+//            Toast.makeText(MyService.this, String.valueOf(i), Toast.LENGTH_SHORT).show();
+//        }
+//        Intent intent1 = new Intent(this,DonorMapsActivity.class);
+//        startActivity(intent1);
+        return START_STICKY;
+    }
 
     @Nullable
     @Override
@@ -19,16 +32,10 @@ public class MyService extends Service {
         super.onCreate();
     }
 
-    //    @Override
-//    public int onStartCommand(Intent intent, int flags, int startId) {
-//
-//        Intent intent1 = new Intent(MyService.this, DriverMapsActivity.class);
-//        startActivity(intent1);
-//        return START_STICKY;
-//    }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+//        Intent intent = new Intent(this,MyService.class);
+//        startActivity(intent);
     }
 }

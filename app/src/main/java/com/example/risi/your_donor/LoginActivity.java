@@ -170,11 +170,11 @@ public class LoginActivity extends AppCompatActivity {
 //                Boolean ut = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
 //                if (ut) {
                     Intent intent = new Intent(LoginActivity.this, dashboard.class);
-//                Intent intent = new Intent(LoginActivity.this, DriverMapsActivity.class);
+//                Intent intent = new Intent(LoginActivity.this, DonorMapsActivity.class);
                     startActivity(intent);
                     finish();
 //                } else {
-//                    Intent intent = new Intent(LoginActivity.this, StudentMapsActivity.class);
+//                    Intent intent = new Intent(LoginActivity.this, AcceptorMapsActivity.class);
 //                    startActivity(intent);
 //                    finish();
 //                }

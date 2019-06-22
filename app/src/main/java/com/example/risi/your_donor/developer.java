@@ -15,7 +15,7 @@ public class developer extends AppCompatActivity {
 //*****************************************************Adding timer for Donor activity***************************************************************
         Handler mHandler = new Handler();
         mHandler.postDelayed(() -> {
-            Intent intent = new Intent(developer.this, DriverMapsActivity.class);
+            Intent intent = new Intent(developer.this, DonorMapsActivity.class);
             startActivity(intent);
             finish();
         }, 60000L);

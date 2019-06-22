@@ -46,6 +46,11 @@ public class dashboard extends AppCompatActivity {
 
         txt = (TextView)findViewById(R.id.txtdashboard);
 //        ritu = (ImageView)findViewById(R.id.ritu);
+
+
+//        Intent intentt = new Intent(this,MyService.class);
+//        startService(intentt);
+
 //*****************************************************This is end details of the card**********************************************************************************
 
         //To get the ID of the current user
@@ -85,12 +90,12 @@ public class dashboard extends AppCompatActivity {
 //        });
 
         certi.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, DriverMapsActivity.class);
+            Intent intent = new Intent(dashboard.this, DonorMapsActivity.class);
             startActivity(intent);
         });
 
         nearby.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, StudentMapsActivity.class);
+            Intent intent = new Intent(dashboard.this, AcceptorMapsActivity.class);
             startActivity(intent);
         });
 
@@ -100,7 +105,7 @@ public class dashboard extends AppCompatActivity {
         });
 
         hospital.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), StudentMapsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AcceptorMapsActivity.class);
             Toast.makeText(dashboard.this, "Link yourself as Hospital \n Click Request Blood", Toast.LENGTH_LONG).show();
             intent.putExtra("hospital",1);
             startActivity(intent);
@@ -118,7 +123,7 @@ public class dashboard extends AppCompatActivity {
         reference.child("chat").child(uId1).child("chatroom").setValue("");
 
         bloodbank.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, StudentMapsActivity.class);
+            Intent intent = new Intent(dashboard.this, AcceptorMapsActivity.class);
             Toast.makeText(dashboard.this, "Link yourself as BloodBank \n Click Requst Blood", Toast.LENGTH_LONG).show();
             startActivity(intent);
         });
@@ -145,7 +150,7 @@ public class dashboard extends AppCompatActivity {
 //*****************************************************Adding timer for Donor activity***************************************************************
         Handler mHandler = new Handler();
         mHandler.postDelayed(() -> {
-            Intent intent = new Intent(dashboard.this, DriverMapsActivity.class);
+            Intent intent = new Intent(dashboard.this, DonorMapsActivity.class);
             startActivity(intent);
         }, 60000L);
 

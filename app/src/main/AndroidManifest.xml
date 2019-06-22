@@ -21,6 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
+
         <activity android:name="com.example.risi.your_donor.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,11 +46,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.risi.your_donor.DriverMapsActivity"
+            android:name="com.example.risi.your_donor.DonorMapsActivity"
             android:label="@string/title_activity_driver_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.risi.your_donor.StudentMapsActivity"
+            android:name="com.example.risi.your_donor.AcceptorMapsActivity"
             android:label="@string/title_activity_student_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.example.risi.your_donor.dashboard" />
@@ -55,9 +59,15 @@
         <activity android:name="com.example.risi.your_donor.reward" />
         <activity android:name=".usr_image" />
 
-        <service android:name="com.example.risi.your_donor.MyService" />
+        <service android:name=".MyService"
+            android:exported="false"
+            ></service>
+
 
         <activity android:name="com.example.risi.your_donor.chat"></activity>
+
+
+
     </application>
 
 </manifest>
