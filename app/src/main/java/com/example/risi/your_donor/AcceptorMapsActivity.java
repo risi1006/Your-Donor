@@ -1,3 +1,6 @@
+//426 452
+
+
 package com.example.risi.your_donor;
 
 import android.Manifest;
@@ -51,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,6 +80,11 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
     private GoogleApiClient mGoogleApiClient;
     private Location mLastKnownLocation;
     private LatLng etaLocation;
+    String SS="";
+    int key_no=0;
+    String detail1 = "";
+    String detail2 = "";
+    String detail3 = "";
     String myParentNode;
     private LatLng studentLocation;
     private LocationRequest mLocationRequest;
@@ -105,13 +114,13 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
         ButterKnife.bind(this);
 
 //*****************************************************Adding timer for Donor activity***************************************************************
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            Intent intent = new Intent(AcceptorMapsActivity.this, DonorMapsActivity.class);
-            startActivity(intent);
-            finish();
-
-        }, 120000L);
+//        Handler mHandler = new Handler();
+//        mHandler.postDelayed(() -> {
+//            Intent intent = new Intent(AcceptorMapsActivity.this, DonorMapsActivity.class);
+//            startActivity(intent);
+//            finish();
+//
+//        }, 120000L);
 
 
 
@@ -169,34 +178,34 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                         public void onClick(DialogInterface dialogInterface, int i) {
                             switch (i) {
                                 case 0:
-                                    bus_num = 2;
+                                    bus_num = 1;
                                     break;
                                 case 1:
-                                    bus_num = 8;
+                                    bus_num = 2;
                                     break;
                                 case 2:
-                                    bus_num = 11;
+                                    bus_num = 3;
                                     break;
                                 case 3:
-                                    bus_num = 23;
+                                    bus_num = 4;
                                     break;
                                 case 4:
-                                    bus_num = 21;
+                                    bus_num = 5;
                                     break;
                                 case 5:
-                                    bus_num = 81;
+                                    bus_num = 6;
                                     break;
                                 case 6:
-                                    bus_num = 111;
+                                    bus_num = 7;
                                     break;
                                 case 7:
-                                    bus_num = 231;
+                                    bus_num = 8;
                                     break;
                                 case 8:
-                                    bus_num = 111;
+                                    bus_num = 9;
                                     break;
                                 case 9:
-                                    bus_num = 231;
+                                    bus_num = 10;
                                     break;
 
                             }
@@ -345,6 +354,8 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                         //here for bloodbank and hospital
 
                     case R.id.request_wait:
+                        ArrayList<String> keys = new ArrayList<String>();
+                        ArrayList<String> detaill = new ArrayList<String>();
                         if (prefs.getInt(getString(R.string.bus_no), 0)==0){
                             Toast.makeText(AcceptorMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
                             break;
@@ -382,11 +393,82 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                                     Log.e(LOG_TAG, "keyis : " + busDriverKey);
 
                                     String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    keys.add(busDriverKey);
+                                    key_no++;
                                     DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users")
                                             .child("Donor")
                                             .child(busDriverKey)
                                             .child("acceptorRequest");
                                     driverRef.setValue(studentId);
+
+                                    DatabaseReference detail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(busDriverKey);
+                                    detail.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot!=null){
+                                            detail1 = dataSnapshot.child("name").getValue().toString();
+                                            detail2 = dataSnapshot.child("mobile").getValue().toString();
+                                            detail3 = dataSnapshot.child("user_n").getValue().toString();
+
+
+                                                Toast.makeText(AcceptorMapsActivity.this, detail1+" || "+detail2+" || "+detail3, Toast.LENGTH_SHORT).show();
+                                                while(detail2==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+                                                detaill.add(detail1+" || "+detail2+" || "+detail3);
+                                                Toast.makeText(AcceptorMapsActivity.this, "started", Toast.LENGTH_SHORT).show();
+
+
+
+                                        }}
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    final int[] count = {0};
+                                    for(String sss:keys){
+                                        Toast.makeText(AcceptorMapsActivity.this, sss, Toast.LENGTH_SHORT).show();
+
+                                        DatabaseReference marker = FirebaseDatabase.getInstance().getReference().child("donor_available").child(sss).child("l");
+//                                                while(marker.toString()==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+                                        marker.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshott) {
+                                                if (dataSnapshott != null) {
+                                                    Toast.makeText(AcceptorMapsActivity.this, "ended", Toast.LENGTH_SHORT).show();
+
+                                                    double lat_value = Double.parseDouble(dataSnapshott.child("0").getValue().toString());
+                                                    double long_value = Double.parseDouble(dataSnapshott.child("1").getValue().toString());
+//                                                    String lat_value = dataSnapshot.child("0").getValue().toString();
+//                                                    String long_value = dataSnapshot.child("0").getValue().toString();
+//                                                        List<Object> map = (List<Object>) dataSnapshott.getValue();
+//                                                        double lat1 = 0;
+//                                                        double lon1 = 0;
+//                                                        if (map.get(0) != null) {
+//                                                            lat1 = Double.parseDouble(map.get(0).toString());
+//                                                        }
+//
+//                                                        if (map.get(1) != null) {
+//                                                            lon1 = Double.parseDouble(map.get(1).toString());
+//                                                        }
+
+                                                    LatLng busLocation1 = new LatLng(lat_value, long_value);
+                                                    mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(detaill.get(count[0])));
+                                                    count[0]++;
+//                                                        Toast.makeText(AcceptorMapsActivity.this, lat1+" || "+lon1, Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    }
+
+
+
 
 
 
@@ -422,7 +504,8 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                                                         no = risi[1];
                                                         id = risi[2];
 
-                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
+                                     SS =  don+" || "+no+" || "+id;
                                                     }
 
                                                     @Override
@@ -431,10 +514,9 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                                                     }
                                                 });
 //                                                if (mBusMarker1 != null) mBusMarker1.remove();
-                                                if(!fina.equals(don+" "+no+" "+id)){
-
-                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no+" "+id));
-                                                fina = don+" "+no+" "+id;}
+                                                if(!fina.equals(SS)){
+//                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no+" "+id));
+                                                fina = SS;}
 
 
                                             }
@@ -448,7 +530,7 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
 
 
 
-                                    Toast.makeText(AcceptorMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(AcceptorMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
 
 
                                     DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
