@@ -1,5 +1,8 @@
+//63 113 134 139
+
 package com.example.risi.your_donor;
 
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,10 +30,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+
+
+
 public class chat extends AppCompatActivity {
    EditText receiver,usermsg;
    String receive;
    int cnt = 0;
+   int flag=0;
+   public String ritesh="";
    Button join,clear;
    ImageButton send;
     String uId1;
@@ -42,6 +50,43 @@ public class chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
          uId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+//**********************************Displaying users message*****************************************************************************
+
+        mydatabase = FirebaseDatabase.getInstance().getReference().child("chat").child(uId1);
+        myText = findViewById(R.id.msg);
+        mydatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()){
+                    String[] Messages = dataSnapshot.getValue().toString().split(",");
+                    myText.setText("");
+                    for(DataSnapshot ds: dataSnapshot.getChildren())
+                    {
+                        String s = ds.getValue().toString();
+                        myText.append(s + "\n");
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//**********************************End of disp usrs message*****************************************************************************
+
+
+
+
+
+
+
+
+
         receiver = (EditText)findViewById(R.id.rec);
 
         join = (Button)findViewById(R.id.join);
@@ -49,7 +94,28 @@ public class chat extends AppCompatActivity {
         clear = (Button)findViewById(R.id.clear);
 
 
-        receiver.setText(uId1);
+//******************************************************appending verification****************************************************************
+
+        DatabaseReference blood = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uId1);
+        blood.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("bb").exists()){
+                    String bob = (String) dataSnapshot.child("bb").getValue();
+                    if(bob.equals("true")){
+                        flag=1;
+                    }}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(chat.this, "Not a blood bank", Toast.LENGTH_LONG).show();
+            }
+        });
+
+//********************************************************************************************************************************************
+
+
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +126,7 @@ public class chat extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot!=null){
                             receive = dataSnapshot.getValue().toString();
-                            Toast.makeText(chat.this,receive, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(chat.this,receive, Toast.LENGTH_SHORT).show();
                             mydatabase = FirebaseDatabase.getInstance().getReference().child("chat").child(receive);
                             myText = findViewById(R.id.msg);
 //                final TextView myText = findViewById(R.id.msg);
@@ -93,6 +159,8 @@ public class chat extends AppCompatActivity {
                 });
 
 
+
+
  //****************************************Counting the no of messages*********************************************************
 //                        DatabaseReference rew = FirebaseDatabase.getInstance().getReference().child("chat").child(receive);
 //                        rew.addValueEventListener(new ValueEventListener() {
@@ -108,7 +176,7 @@ public class chat extends AppCompatActivity {
 //
 //                            }
 //                        });
-                        Toast.makeText(chat.this,String.valueOf(cnt), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(chat.this,String.valueOf(cnt), Toast.LENGTH_SHORT).show();
 //****************************************End of count of messages************************************************************
 
                     }}
@@ -128,14 +196,26 @@ public class chat extends AppCompatActivity {
             public void onClick(View v) {
                 usermsg = (EditText)findViewById(R.id.usermsg);
                 if(receive.equals(uId1)){
-                    mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString());
-                    Toast.makeText(chat.this,"same", Toast.LENGTH_SHORT).show();
+                    if(flag==1){
+                    mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+" (Bloodbank)");
+//                    Toast.makeText(chat.this,"same", Toast.LENGTH_SHORT).show();
 
 
                 }
+                else
+                    {
+                        mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+"( Not Bloodbank)");
+                    }
+                }
                 else {
-                    Toast.makeText(chat.this,"different", Toast.LENGTH_SHORT).show();
-                mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString());
+                    if(flag==1){
+//                    Toast.makeText(chat.this,"different", Toast.LENGTH_SHORT).show();
+                mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Bloodbank)");
+                    }
+                else
+                    {
+                        mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Not Bloodbank)");
+                    }
 
                 }
                 usermsg.setText("");
@@ -143,9 +223,13 @@ public class chat extends AppCompatActivity {
             }
         });
 
+
+
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 rew = FirebaseDatabase.getInstance().getReference().child("chat").child(uId1);
                 rew.removeValue();
                 myText.setText("");
@@ -153,10 +237,12 @@ public class chat extends AppCompatActivity {
 
                 mydatabase.child(String.valueOf(cnt)).setValue(" ");
                 rew = FirebaseDatabase.getInstance().getReference();
+
             }
         });
 
 
     }
+
 
 }

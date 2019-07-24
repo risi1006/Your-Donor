@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 
 public class GpsTracker extends Service implements LocationListener {
@@ -133,6 +134,26 @@ public class GpsTracker extends Service implements LocationListener {
         }
         return longitude;
     }
+
+//******************************************GPS Loaction***************************************************************************
+public Location getLocation(){
+    if (ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
+        return null;
+    }
+    try {
+        LocationManager lm = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+        boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (isGPSEnabled){
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 6000,10,this);
+            Location loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            return loc;
+        }
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+    return null;
+}
+//******************************************GPS Location**************************************************************************-
 
     public boolean canGetLocation(){
         return this.canGetLocation;

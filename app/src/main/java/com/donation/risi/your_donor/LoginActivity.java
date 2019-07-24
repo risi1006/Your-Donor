@@ -16,8 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import android.graphics.drawable.AnimationDrawable;
@@ -35,24 +38,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText r1, r2;
+    private Spinner spinner;
+    String item;
+    String value1;
     User user1 = new User();
     private CoordinatorLayout coordinatorLayout;
     private AnimationDrawable animationDrawable;
     DatabaseReference user_no;
     int no_user=0;
+    String totall="null";
     @BindView(R.id.text_input_layout_email)
     TextInputLayout emailWrapper;
     @BindView(R.id.text_input_layout_password)
     TextInputLayout passwordWrapper;
     @BindView(R.id.btnLogin)
     Button login;
-
-
     @BindView(R.id.btnregister)
     Button register;
 //    @BindView(R.id.chooser_spinner)
@@ -63,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String LOG_TAG = LoginActivity.class.getSimpleName();
     private int bus_num = 0;
     //Firebase utils
+    Integer result=0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ProgressDialog mProgress;
@@ -84,35 +93,114 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        spinner = (Spinner)findViewById(R.id.spinner);
         r1 = (EditText) findViewById(R.id.name);
         r2 = (EditText) findViewById(R.id.contact);
         Firebase.setAndroidContext(getApplicationContext());
-        user_no  = FirebaseDatabase.getInstance().getReference();
+
+        List<String> categories = new ArrayList<>();
+        categories.add(0,"Select your blood group");
+        categories.add("A+");
+        categories.add("A-");
+        categories.add("B+");
+        categories.add("B-");
+        categories.add("AB+");
+        categories.add("AB-");
+        categories.add("O+");
+        categories.add("O-");
+        categories.add("Blood Bank");
+
+        ArrayAdapter<String> dataAdapter;
+        dataAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,categories);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).equals("Select your blood group"))
+                {
+
+                }
+                else
+                {
+                    item = parent.getItemAtPosition(position).toString();
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
 
 
 
 //*****************************Finding  no of users******************************************************************************
 
-        user_no = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor");
-        user_no.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if(dataSnapshot.exists()){
-                    for(DataSnapshot ds: dataSnapshot.getChildren())
-                    {   no_user++;
-                    }
-                }
-                Toast.makeText(LoginActivity.this ,String.valueOf(no_user) ,Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
         user_no = FirebaseDatabase.getInstance().getReference();
+//        user_no.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists())
+//                {
+//                    totall = dataSnapshot.child("total").getValue().toString();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+//        DatabaseReference totalll = FirebaseDatabase.getInstance().getReference().child("1total");
+//        totalll.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//             totall = dataSnapshot.getValue().toString();
+//                Toast.makeText(LoginActivity.this ,"1 "+dataSnapshot.toString(),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this ,"2 "+dataSnapshot.getValue().toString(),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this,"3 "+totall,Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//        Toast.makeText(LoginActivity.this ,totall,Toast.LENGTH_SHORT).show();
+
+//        user_no = FirebaseDatabase.getInstance().getReference().child("1total");
+//        user_no.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                if(dataSnapshot.exists())
+//                {
+//                    total = dataSnapshot.getValue().toString();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+////        });
+//        while (totall.equals("null")){
+//            Toast.makeText(LoginActivity.this,"waiting... ",Toast.LENGTH_SHORT).show();
+//        }
+////        Toast.makeText(LoginActivity.this ,totall,Toast.LENGTH_SHORT).show();
+////        result = Integer.parseInt(total);
+//          result = Integer.valueOf(totall);
+//        Toast.makeText(LoginActivity.this,String.valueOf(result),Toast.LENGTH_SHORT).show();
+//        user_no = FirebaseDatabase.getInstance().getReference();
 //*****************************End of find **************************************************************************************
 
 
@@ -169,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
             if (user != null) {
 //                Boolean ut = getPreferences(Context.MODE_PRIVATE).getBoolean(getString(R.string.isDriver), false);
 //                if (ut) {
-                    Intent intent = new Intent(LoginActivity.this, dashboard.class);
+                    Intent intent = new Intent(LoginActivity.this, DonorMapsActivity.class);
 //                Intent intent = new Intent(LoginActivity.this, DonorMapsActivity.class);
                     startActivity(intent);
                     finish();
@@ -225,7 +313,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()){
                        Toast.makeText(LoginActivity.this ,"Sign in error!" ,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
+
+
 
                 }
             });
@@ -233,6 +326,15 @@ public class LoginActivity extends AppCompatActivity {
 
 
         register.setOnClickListener(view -> {
+            if(item.equals("A+")) value1 = "1";
+            else if(item.equals("A-")) value1 = "2";
+            else if(item.equals("B+")) value1 = "3";
+            else if(item.equals("B-")) value1 = "4";
+            else if(item.equals("AB+")) value1 = "5";
+            else if(item.equals("AB-")) value1 = "6";
+            else if(item.equals("O+")) value1 = "7";
+            else if(item.equals("O-")) value1 = "8";
+            else if(item.equals("Blood Bank")) value1 = "9";
             User user1 = new User();
             mProgress.show();
             hideKeyBoard();
@@ -279,10 +381,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
 
                     Toast.makeText(LoginActivity.this, "Sign up error!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
                     String user_id = mAuth.getCurrentUser().getUid();
 
                     Log.i(LOG_TAG, "User is : " + "Donor");
+
+
 //                    Log.i(LOG_TAG, "User is : " + user);
 //                    User user1 = new User();
 
@@ -292,11 +399,20 @@ public class LoginActivity extends AppCompatActivity {
                         DatabaseReference user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id);
 //                                user_db.setValue(user1.toString());
                                   user_db.setValue(true);
-                    user1.setUser_n(String.valueOf(no_user+1));
-                    FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id).setValue(user1);
-                    user_no.child("user_no").child(String.valueOf(no_user+1)).setValue(user_id);
 
-                    no_user=0;
+//****************************************user no***********************************************************************************
+                    user1.setUser_n("NA");
+                    FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(user_id).setValue(user1);
+                    user_no.child("user_no").child(user_id).setValue("NA");
+//****************************************user no********************************************************************************
+
+                    String uIdd = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(value1).child(uIdd);
+                    ref.setValue("Donor");
+
+
+                    Intent intentt = new Intent(this,DonorMapsActivity.class);
+                    startActivity(intentt);
 
 
 
@@ -346,6 +462,17 @@ public class LoginActivity extends AppCompatActivity {
             // stop the animation
             animationDrawable.stop();
         }
+    }
+
+    public void userE(View view) {
+        Intent intentt1 = new Intent(this,HUseE.class);
+        startActivity(intentt1);
+    }
+
+    public void userH(View view) {
+        Intent intentt1 = new Intent(this,HUseH.class);
+        startActivity(intentt1);
+
     }
 }
 

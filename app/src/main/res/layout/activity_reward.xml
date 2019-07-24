@@ -33,7 +33,7 @@
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_height="78dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -52,8 +52,8 @@
 
     <TextView
         android:id="@+id/txtProgress2"
-        android:layout_width="30sp"
-        android:layout_height="wrap_content"
+        android:layout_width="52dp"
+        android:layout_height="25dp"
         android:layout_alignBottom="@+id/progressBar2"
         android:layout_centerInParent="true"
         android:layout_marginTop="8dp"

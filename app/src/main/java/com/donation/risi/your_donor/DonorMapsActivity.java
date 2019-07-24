@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.RingtoneManager;
+import android.os.Handler;
 import android.provider.Settings;
 
 import android.support.annotation.NonNull;
@@ -64,7 +65,7 @@ import butterknife.ButterKnife;
 public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
-//*********************************************Definging the buttons of the drawer*********************************************************************
+    //*********************************************Definging the buttons of the drawer*********************************************************************
     @BindView(R.id.logout_btn_driver)
     Button mLogout;
     @BindView(R.id.link_bus)
@@ -76,7 +77,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
 
-//*********************************************Defining the variables******************************************************************************
+    //*********************************************Defining the variables******************************************************************************
     public static final String LOG_TAG = DonorMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
 
@@ -136,6 +137,10 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
         setSupportActionBar(mToolbar);
 
         Window window = this.getWindow();
+
+
+
+
 //************************************* Status bar :: Transparent**************************************************************************************
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -211,6 +216,16 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
+                Handler mHandler = new Handler();
+        mHandler.postDelayed(() -> {
+            Intent intent = new Intent(DonorMapsActivity.this, dashboard.class);
+            startActivity(intent);
+            finish();
+        }, 10000L);
+
+
+            Toast.makeText(DonorMapsActivity.this,"Turn on GPS\nGo to the drawer\nYou will be redirected to main page.", Toast.LENGTH_LONG).show();
+
 //*********************************************Garbage***********************************************************************************************
 
         DatabaseReference requestRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uid);
@@ -255,7 +270,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
 //*****************************************************************************************************************************************************
 
     }
-//*************************************Function to turn GPS on******************************************************************************************
+    //*************************************Function to turn GPS on******************************************************************************************
     public void turnGPSOn() {
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -267,13 +282,18 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         Intent callGPSSettingIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivity(callGPSSettingIntent);
                     }).setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
-                            AlertDialog alert = alertDialogBuilder.create();
-                alert.show();
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
+        else
+        {
+            Intent intent = new Intent(DonorMapsActivity.this, dashboard.class);
+            startActivity(intent);
         }
     }
 
 
-//***************************************set up drawer*************************************************************************************************
+    //***************************************set up drawer*************************************************************************************************
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(item -> {
             selectDrawrItem(item);
@@ -283,8 +303,8 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
 
-//***************************************Select drawer item********************************************************************************************
-  private void selectDrawrItem(MenuItem item) {
+    //***************************************Select drawer item********************************************************************************************
+    private void selectDrawrItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.link_bus:
                 AlertDialog.Builder metaDialog = new AlertDialog.Builder(DonorMapsActivity.this);
@@ -292,35 +312,33 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
                         .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
                             switch (i) {
                                 case 0:
-                                    bus_num = 2;
+                                    bus_num = 1;
                                     break;
                                 case 1:
-                                    bus_num = 8;
+                                    bus_num = 2;
                                     break;
                                 case 2:
-                                    bus_num = 11;
+                                    bus_num = 3;
                                     break;
                                 case 3:
-                                    bus_num = 23;
+                                    bus_num = 4;
                                     break;
                                 case 4:
-                                    bus_num = 21;
+                                    bus_num = 5;
                                     break;
                                 case 5:
-                                    bus_num = 81;
+                                    bus_num = 6;
                                     break;
                                 case 6:
-                                    bus_num = 111;
+                                    bus_num = 7;
                                     break;
                                 case 7:
-                                    bus_num = 231;
+                                    bus_num = 8;
                                     break;
                                 case 8:
-                                    bus_num = 111;
+                                    bus_num = 9;
                                     break;
-                                case 9:
-                                    bus_num = 231;
-                                    break;
+
 
 
                             }
@@ -345,6 +363,11 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
         item.setChecked(true);
         mDrawerLayout.closeDrawers();
     }
+
+
+
+
+
 
 
     /**
@@ -382,7 +405,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("donor_available");
         GeoFire geoFire = new GeoFire(reference);
-        geoFire.removeLocation(uid);
+//        geoFire.removeLocation(uid);
     }
 
     @Override
@@ -430,4 +453,10 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
     public void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, RC_PER);
     }
+
+
+
+
+
+
 }

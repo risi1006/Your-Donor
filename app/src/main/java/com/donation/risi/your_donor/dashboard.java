@@ -26,10 +26,12 @@ public class dashboard extends AppCompatActivity {
     private ImageView hospital;
     private ImageView lifeline;
     private ImageView userimage;
+    public String name;
+    String mob,userno;
 //    private ImageView ritu;
     private TextView txt;
     String[] token;
-
+    int no_user=0;
     int i=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,64 @@ public class dashboard extends AppCompatActivity {
 //        ritu = (ImageView)findViewById(R.id.ritu);
 
 
-//        Intent intentt = new Intent(this,MyService.class);
-//        startService(intentt);
+        DatabaseReference user_no = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor");
+        user_no.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot ds: dataSnapshot.getChildren())
+                    {   no_user++;
+                    }
+                }
+//                Toast.makeText(dashboard.this ,String.valueOf(no_user) ,Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("1total").setValue(String.valueOf(no_user));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+//*******************************Calling service activity*******************************************************************************
+        Intent intent1 = new Intent(dashboard.this, MyService.class);
+        startService(intent1);
+
 
 //*****************************************************This is end details of the card**********************************************************************************
 
         //To get the ID of the current user
         String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+//***************************************Setting Everyone As a donor By default**************************************************************
+        DatabaseReference sett;
+        for(int i=1;i<=10;i++)
+        {
+            sett = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(i)).child(uId);
+            DatabaseReference finalSett = sett;
+            sett.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        finalSett.setValue("Donor");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+
+
+//***************************************By default setup ended here*************************************************************************
+
 
 
 //*******************************************************For Name in Dashboard *********************************************************************************************************************************
@@ -65,10 +118,13 @@ public class dashboard extends AppCompatActivity {
                 {
                     for(DataSnapshot cSnapshot:dataSnapshot.getChildren())
                     {
-                        String name3 = dataSnapshot.getValue().toString();
-
-                        token = name3.split(",");
-                        txt.setText("Welcome "+token[1].substring(6));
+                        name = dataSnapshot.child("name").getValue().toString();
+                        mob = dataSnapshot.child("mobile").getValue().toString();
+                        userno = dataSnapshot.child("user_n").getValue().toString();
+//                        String name3 = dataSnapshot.getValue().toString();
+//
+//                        token = name3.split(",");
+                        txt.setText("Welcome "+name);
                     }
                 }
             }
@@ -89,9 +145,13 @@ public class dashboard extends AppCompatActivity {
 ////            startActivity(intent);
 //        });
 
+
+
+
         certi.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, DonorMapsActivity.class);
+            Intent intent = new Intent(dashboard.this, intermediate1.class);
             startActivity(intent);
+
         });
 
         nearby.setOnClickListener(view -> {
@@ -100,8 +160,9 @@ public class dashboard extends AppCompatActivity {
         });
 
         reward.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, reward.class);
-            startActivity(intent);
+            Toast.makeText(dashboard.this, "Under development phase", Toast.LENGTH_LONG).show();
+//            Intent intent = new Intent(dashboard.this, reward.class);
+//            startActivity(intent);
         });
 
         hospital.setOnClickListener(view -> {
@@ -114,18 +175,41 @@ public class dashboard extends AppCompatActivity {
         //Extra test code which would be for hospital use
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         String uId1 = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        reference.child("reward").child(uId1).child("hospital1").child("name").setValue("Opal Hospital");
-        reference.child("reward").child(uId1).child("hospital1").child("mobile").setValue("01");
-
-        reference.child("reward").child(uId1).child("hospital2").child("name").setValue("BHU");
-        reference.child("reward").child(uId1).child("hospital2").child("mobile").setValue("02");
+//        reference.child("reward").child(uId1).child("hospital1").child("name").setValue("Opal Hospital");
+//        reference.child("reward").child(uId1).child("hospital1").child("mobile").setValue("01");
+//
+//        reference.child("reward").child(uId1).child("hospital2").child("name").setValue("BHU");
+//        reference.child("reward").child(uId1).child("hospital2").child("mobile").setValue("02");
 
         reference.child("chat").child(uId1).child("chatroom").setValue("");
 
         bloodbank.setOnClickListener(view -> {
-            Intent intent = new Intent(dashboard.this, AcceptorMapsActivity.class);
-            Toast.makeText(dashboard.this, "Link yourself as BloodBank \n Click Requst Blood", Toast.LENGTH_LONG).show();
-            startActivity(intent);
+
+            DatabaseReference blood = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(uId1);
+            blood.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.child("bb").exists()){
+                    String bob = (String) dataSnapshot.child("bb").getValue();
+                    if(bob.equals("true")){
+                        Toast.makeText(dashboard.this, "Verified Blood Bank", Toast.LENGTH_LONG).show();
+                        FirebaseDatabase.getInstance().getReference().child("Save the Life").child("10").child(uId1).setValue("Donor");
+                        Intent intent = new Intent(dashboard.this, BloodBank.class);
+                        startActivity(intent);
+                    }}
+                    else
+                    {
+                        Toast.makeText(dashboard.this, "This account id not connected\nwith any blood bank", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(dashboard.this, "Not a blood bank", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
         });
 
         lifeline.setOnClickListener(view -> {
@@ -136,9 +220,9 @@ public class dashboard extends AppCompatActivity {
 
 
         profile.setOnClickListener(view -> {
-            Toast.makeText(dashboard.this, token[0].substring(1)+"\n"+token[1], Toast.LENGTH_SHORT).show();
-//             ritu.setVisibility(View.VISIBLE);
 
+            Intent intent = new Intent(dashboard.this, ProfileInfo.class);
+            startActivity(intent);
         });
 
         developer.setOnClickListener(view -> {
@@ -148,11 +232,11 @@ public class dashboard extends AppCompatActivity {
 //******************************************************Ending for the details of the card********************************************************************************
 
 //*****************************************************Adding timer for Donor activity***************************************************************
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            Intent intent = new Intent(dashboard.this, DonorMapsActivity.class);
-            startActivity(intent);
-        }, 60000L);
+//        Handler mHandler = new Handler();
+//        mHandler.postDelayed(() -> {
+//            Intent intent = new Intent(dashboard.this, DonorMapsActivity.class);
+//            startActivity(intent);
+//        }, 60000L);
 
 
 

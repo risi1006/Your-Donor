@@ -39,12 +39,12 @@ public class reward extends AppCompatActivity {
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
         txtProgress2 = (TextView)findViewById(R.id.txtProgress2);
 //*****************************************************Adding timer for Donor activity***************************************************************
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            Intent intent = new Intent(reward.this, DonorMapsActivity.class);
-            startActivity(intent);
-            finish();
-        }, 60000L);
+//        Handler mHandler = new Handler();
+//        mHandler.postDelayed(() -> {
+//            Intent intent = new Intent(reward.this, DonorMapsActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }, 60000L);
 
 
 

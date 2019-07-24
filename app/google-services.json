@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "577873101953",
-    "firebase_url": "https://save-life-97f46.firebaseio.com",
-    "project_id": "save-life-97f46",
-    "storage_bucket": "save-life-97f46.appspot.com"
+    "project_number": "699100213383",
+    "firebase_url": "https://final-project-188f8.firebaseio.com",
+    "project_id": "final-project-188f8",
+    "storage_bucket": "final-project-188f8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:577873101953:android:89c926ba1ac05e28",
+        "mobilesdk_app_id": "1:699100213383:android:87381c2112fbdea1",
         "android_client_info": {
-          "package_name": "com.example.risi.your_donor"
+          "package_name": "com.donation.risi.your_donor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "577873101953-1v6a6slib4v4nne0sq4v568a5d4qqp20.apps.googleusercontent.com",
+          "client_id": "699100213383-84mu0mcd6ukga6tv780337ahpbsl8qjb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.risi.your_donor",
+            "package_name": "com.donation.risi.your_donor",
             "certificate_hash": "0752afcb3bd72fd5b9c6acc237de15911c7e0920"
           }
         },
         {
-          "client_id": "577873101953-asrr23i7ekl7drc431oi3mug9jeu1h5q.apps.googleusercontent.com",
+          "client_id": "699100213383-t77i8l8rcrsuav7l9mcp9brfempi6jhk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCvD8-H-BR0uFSEMPB0IomjmoZ9xuiptSg"
+          "current_key": "AIzaSyBtaGcaH30mMWe8ZEEk5v5JNDTKv2vFbks"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "577873101953-asrr23i7ekl7drc431oi3mug9jeu1h5q.apps.googleusercontent.com",
+              "client_id": "699100213383-t77i8l8rcrsuav7l9mcp9brfempi6jhk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

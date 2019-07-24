@@ -13,12 +13,12 @@ public class developer extends AppCompatActivity {
         setContentView(R.layout.activity_developer);
 
 //*****************************************************Adding timer for Donor activity***************************************************************
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            Intent intent = new Intent(developer.this, DonorMapsActivity.class);
-            startActivity(intent);
-            finish();
-        }, 60000L);
+//        Handler mHandler = new Handler();
+//        mHandler.postDelayed(() -> {
+//            Intent intent = new Intent(developer.this, DonorMapsActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }, 60000L);
 
 
 
