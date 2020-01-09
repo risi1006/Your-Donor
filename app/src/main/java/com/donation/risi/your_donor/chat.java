@@ -1,18 +1,14 @@
 //63 113 134 139
 
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
-import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,16 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-
 
 
 public class chat extends AppCompatActivity {
@@ -194,31 +181,35 @@ public class chat extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usermsg = (EditText)findViewById(R.id.usermsg);
-                if(receive.equals(uId1)){
-                    if(flag==1){
-                    mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+" (Bloodbank)");
-//                    Toast.makeText(chat.this,"same", Toast.LENGTH_SHORT).show();
+                try {
+                    usermsg = (EditText)findViewById(R.id.usermsg);
+                    if(receive.equals(uId1)){
+                        if(flag==1){
+                        mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+" (Bloodbank)");
+    //                    Toast.makeText(chat.this,"same", Toast.LENGTH_SHORT).show();
 
 
-                }
-                else
-                    {
-                        mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+"( Not Bloodbank)");
                     }
-                }
-                else {
-                    if(flag==1){
-//                    Toast.makeText(chat.this,"different", Toast.LENGTH_SHORT).show();
-                mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Bloodbank)");
+                    else
+                        {
+                            mydatabase.child(String.valueOf(cnt)).setValue("                        "+usermsg.getText().toString()+"( Not Bloodbank)");
+                        }
                     }
-                else
-                    {
-                        mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Not Bloodbank)");
-                    }
+                    else {
+                        if(flag==1){
+    //                    Toast.makeText(chat.this,"different", Toast.LENGTH_SHORT).show();
+                    mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Bloodbank)");
+                        }
+                    else
+                        {
+                            mydatabase.child(String.valueOf(cnt)).setValue(usermsg.getText().toString()+" (Not Bloodbank)");
+                        }
 
+                    }
+                    usermsg.setText("");
+                } catch (Exception e) {
+                    Toast.makeText(chat.this,"No user ID found", Toast.LENGTH_SHORT).show();
                 }
-                usermsg.setText("");
 
             }
         });

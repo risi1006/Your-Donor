@@ -1,32 +1,22 @@
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 public class HUseE extends AppCompatActivity {
 
+    ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_huse_e);
-    }
+    viewPager = (ViewPager)findViewById(R.id.myViewPager);
 
-    public void userrE(View view) {
-        //for user
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=AsAh9e3GbZM&t=1s"));
-        startActivity(intent);
+    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+    viewPager.setAdapter(viewPagerAdapter);
 
     }
 
-    public void userB(View view) {
-        //for blood bank
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=hicyjCLPYYk"));
-        startActivity(intent);
-
-    }
 }

@@ -1,7 +1,4 @@
-//426 452
-
-
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -10,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,8 +39,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -66,54 +60,71 @@ import butterknife.ButterKnife;
 public class AcceptorMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    //For Tools in acceptor activity
     @BindView(R.id.toolbar)
     android.support.v7.widget.Toolbar mToolbar;
-    @BindView(R.id.student_drawer_layout)
+    //For drawer in acceptor activity
+    @BindView(R.id.acceptor_drawer_layout)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.nav_view_student)
     NavigationView mNavigationView;
-//    @BindView(R.id.locate_bus_fab)
-//    FloatingActionButton locateBus;
 
     public static final String LOG_TAG = AcceptorMapsActivity.class.getSimpleName();
     private static final int RC_PER = 2;
 
     private GoogleMap mMap;
+    private double langgi,altti;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastKnownLocation;
     private LatLng etaLocation;
     String SS="";
     int key_no=0;
+
+    //name,mobile,user,timing
     String detail1 = "";
     String detail2 = "";
     String detail3 = "";
+    String detail4 = "";
+
+    //for retrieval the parent node of the node
     String myParentNode;
-    private LatLng studentLocation;
+
+    //for storing the location of acceptor
+    private LatLng acceptorLocation;
     private LocationRequest mLocationRequest;
     private int radiusLocateBusRequest = 1;
-    private boolean busFound = false;
-    private String busDriverKey = "";
+    private boolean DonorFound = false;
+    private String DonorKey = "";
     private String donordet = "";
     private ActionBarDrawerToggle mDrawerToggle;
     private View mMapView;
-    private int bus_num;
-    private boolean driverFound = false;
+    private int group;
+    private boolean donorFound = false;
     private SharedPreferences prefs;
     private Marker mBusMarker;
     private Marker mBusMarker1;
     private ProgressBar spinner;
     String name3="";
     int hospitall = 0;
-    int busNo;
+    int GNo;
     int bloodbankk = 0;
+
+    //For updating date and time...currently under progress
+    String Stime="0",Sdate="0";
+    int Itime=-1,Idate;
     String don,no,fina="",id;
+
+    //for firebase Database
     DatabaseReference doornail;
     DatabaseReference ref;
+
+    //To start map activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_maps);
         ButterKnife.bind(this);
+
 
 //*****************************************************Adding timer for Donor activity***************************************************************
 //        Handler mHandler = new Handler();
@@ -123,30 +134,16 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
 //            finish();
 //
 //        }, 120000L);
-
-
-
 //*****************************************************This is the details of the card**********************************************************************************
 
-
-
-
+        //Activity costomization
 //
 
-//        Bundle bundle = getIntent().getExtras();
-//         hospitall = bundle.getInt("hospital");
-////        if(hospitall==1)
-//        {
-//            bus_num=111;
-//
-//        }
-        // Toolbar :: Transparent
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Locate your Donor");
 
         Window window = this.getWindow();
-        // Status bar :: Transparent
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(Color.TRANSPARENT);
@@ -159,6 +156,7 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //Interacting with google map
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -166,73 +164,131 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                 .build();
 
         mMapView = mapFragment.getView();
+//        etaLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(etaLocation));
 
-        // When the studentMapsActivity launches first time, we ask for bus number and then it
+
+        // When the DonorMapsActivity launches first time, we ask for group number and then it
         // would be configurable in the settings activity.
         prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean firstTime = prefs.getBoolean(getString(R.string.student_maps_first_time_launch), true);
-        if (firstTime) {
-
-            AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
-            metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
-                    .setItems(R.array.bus_numbers, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            switch (i) {
-                                case 0:
-                                    bus_num = 1;
-                                    break;
-                                case 1:
-                                    bus_num = 2;
-                                    break;
-                                case 2:
-                                    bus_num = 3;
-                                    break;
-                                case 3:
-                                    bus_num = 4;
-                                    break;
-                                case 4:
-                                    bus_num = 5;
-                                    break;
-                                case 5:
-                                    bus_num = 6;
-                                    break;
-                                case 6:
-                                    bus_num = 7;
-                                    break;
-                                case 7:
-                                    bus_num = 8;
-                                    break;
-                                case 8:
-                                    bus_num = 9;
-                                    break;
-                                case 9:
-                                    bus_num = 10;
-                                    break;
-
-                            }
-
-                            String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
-                            ref.setValue("Acceptor");
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean(getString(R.string.student_maps_first_time_launch), false);
-                            editor.putInt(getString(R.string.bus_no), bus_num);
-                            editor.apply();
-                        }
-                    });
-            AlertDialog dialog = metadialogBuilder.create();
-            dialog.show();
-            Log.e(LOG_TAG, "Blood Group selected by user is : " + bus_num);
-
+//        boolean firstTime = prefs.getBoolean(getString(R.string.acceptor_maps_first_time_launch), true);
+//        if (firstTime) {
+//
+//            AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
+//            metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
+//                    .setItems(R.array.Bgroup, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            switch (i) {
+//                                case 0:
+//                                    group = 1;
+//                                    break;
+//                                case 1:
+//                                    group = 2;
+//                                    break;
+//                                case 2:
+//                                    group = 3;
+//                                    break;
+//                                case 3:
+//                                    group = 4;
+//                                    break;
+//                                case 4:
+//                                    group = 5;
+//                                    break;
+//                                case 5:
+//                                    group = 6;
+//                                    break;
+//                                case 6:
+//                                    group = 7;
+//                                    break;
+//                                case 7:
+//                                    group = 8;
+//                                    break;
+//                                case 8:
+//                                    group = 9;
+//                                    break;
+//                                case 9:
+//                                    group = 10;
+//                                    break;
+//
+//                            }
+//
+//                            //Interaction with google firebase
+//                            String uId = FirebaseAuth.getInstance().getCurrentUser().getUid(); //gives the unique id of current user
+//                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(group)).child(uId);
+////                            ref.setValue("Acceptor");
+//                            SharedPreferences.Editor editor = prefs.edit();
+//                            editor.putBoolean(getString(R.string.acceptor_maps_first_time_launch), false);
+//                            editor.putInt(getString(R.string.bus_no), group);
+//                            editor.apply();
+//                        }
+//                    });
+//            AlertDialog dialog = metadialogBuilder.create();
+//            dialog.show();
+//
+//            //To show in log
+//            Log.e(LOG_TAG, "Blood Group selected by user is : " + group);
+//
 
             //
-        }
-//********************************************************************************
-//        locateBus = (FloatingActionButton) findViewById(R.id.locate_bus_fab);
-        //********************************************************************
-//        locateBus.setBackgroundColor(getResources().getColor(R.color.white));
-//        locateBus.setImageResource(R.drawable.activity);
+//        }
+
+//        DatabaseReference timing = FirebaseDatabase.getInstance().getReference().child("Time");
+//        timing.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//            if(dataSnapshot!=null){
+//                Stime = dataSnapshot.child("time").getValue().toString();
+//                int kkk= 0;
+//                while(kkk<=5) {
+////                    Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();
+//                    kkk++;
+//                }
+////
+//            }
+////
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+        DatabaseReference dating = FirebaseDatabase.getInstance().getReference().child("Time");
+        dating.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChildren()) {
+                    for (DataSnapshot cSnapshot : dataSnapshot.getChildren()) {
+                        Stime = dataSnapshot.child("time").getValue().toString();
+                        Sdate = dataSnapshot.child("date").getValue().toString();
+                    }}
+
+//                Toast.makeText(AcceptorMapsActivity.this, Sdate+"\n "+Stime, Toast.LENGTH_SHORT).show();
+//                Itime = Integer.getInteger(Stime);
+//                if(dataSnapshot!=null){
+//                Sdate = dataSnapshot.child("date").getValue().toString();
+//                    int kkk= 0;
+//                    while(kkk<=5){
+////                        Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();
+//                        kkk++;
+//                    }
+
+//                Toast.makeText(AcceptorMapsActivity.this, Stime, Toast.LENGTH_SHORT).show();
+}
+//            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+//
+//        FirebaseDatabase.getInstance().getReference().child("Time").child("time");
+//        FirebaseDatabase.getInstance().getReference().child("Date").child("date").setValue(date);
 
         spinner=findViewById(R.id.progressBar1);
                 spinner.setVisibility(View.GONE);
@@ -250,103 +306,190 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
 
                         //here for bloodbank and hospital
 
-                    case R.id.request_wait:
-                        ArrayList<String> keys = new ArrayList<String>();
-                        ArrayList<String> detaill = new ArrayList<String>();
-                        if (prefs.getInt(getString(R.string.bus_no), 0)==0){
-                            Toast.makeText(AcceptorMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
-                            break;
-                        }
-                        spinner.setVisibility(View.VISIBLE);
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("request_wait");
-                        GeoFire geofire = new GeoFire(ref);
-                        geofire.setLocation(userId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                        //if request blood key is pressed
+                        case R.id.request_wait:
 
-                        etaLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(etaLocation));
-                        Toast.makeText(AcceptorMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
+                            try {
+                            ArrayList<String> keys = new ArrayList<String>();
+                            ArrayList<String> detaill = new ArrayList<String>();
+                            if (prefs.getInt(getString(R.string.bus_no), 0)==0){
+                                Toast.makeText(AcceptorMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+                            spinner.setVisibility(View.VISIBLE);
+                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("request_wait");
+                            GeoFire geofire = new GeoFire(ref);
+                            geofire.setLocation(userId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
 
-                        busNo = prefs.getInt(getString(R.string.bus_no), 0);
+                            etaLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                            langgi = mLastKnownLocation.getLongitude();
+                            altti = mLastKnownLocation.getLatitude();
 
+                            //Fod adding marker in google map
+                            mMap.addMarker(new MarkerOptions().position(etaLocation));
+                            Toast.makeText(AcceptorMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
 
-
-                        if (busNo==0){
-                            Toast.makeText(AcceptorMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
-                            break;
-                        }
-                        DatabaseReference busRef = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(busNo));
-                        busRef.addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                busDriverKey = dataSnapshot.getKey();
-                                String isDriver = dataSnapshot.getValue(String.class);
-                                if (isDriver.equals("Donor")){
-                                    busDriverKey = dataSnapshot.getKey();
-                                    driverFound = true;
-                                    HashMap map = new HashMap();
-                                    map.put("busDriverID", busDriverKey);
-                                    ref.child(userId).updateChildren(map);
-                                    Log.e(LOG_TAG, "keyis : " + busDriverKey);
-
-                                    String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    keys.add(busDriverKey);
-                                    key_no++;
-                                    DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users")
-                                            .child("Donor")
-                                            .child(busDriverKey)
-                                            .child("acceptorRequest");
-                                    driverRef.setValue(studentId);
-
-                                    DatabaseReference detail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(busDriverKey);
-                                    detail.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if(dataSnapshot!=null){
-                                            detail1 = dataSnapshot.child("name").getValue().toString();
-                                            detail2 = dataSnapshot.child("mobile").getValue().toString();
-                                            detail3 = dataSnapshot.child("user_n").getValue().toString();
+                                GNo = prefs.getInt(getString(R.string.bus_no), 0);
 
 
-                                                Toast.makeText(AcceptorMapsActivity.this, detail1+" || "+detail2+" || "+detail3, Toast.LENGTH_SHORT).show();
-                                                while(detail2==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
-                                                detaill.add(detail1+" || "+detail2+" || "+detail3);
-                                                Toast.makeText(AcceptorMapsActivity.this, "started", Toast.LENGTH_SHORT).show();
+                            if (GNo==0){
+                                Toast.makeText(AcceptorMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
+                                break;
+                            }
+
+                            //Database retrieval
+                            DatabaseReference busRef = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(GNo));
+                            busRef.addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    DonorKey = dataSnapshot.getKey();
+                                    String isDriver = dataSnapshot.getValue(String.class);
+                                    if (isDriver.equals("Donor")){
+                                        DonorKey = dataSnapshot.getKey();
+                                        donorFound = true;
+                                        HashMap map = new HashMap();
+                                        map.put("busDriverID", DonorKey);
+                                        ref.child(userId).updateChildren(map);
+                                        Log.e(LOG_TAG, "keyis : " + DonorKey);
+
+                                        String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                        keys.add(DonorKey);
+                                        key_no++;
+                                        DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users")
+                                                .child("Donor")
+                                                .child(DonorKey)
+                                                .child("acceptorRequest");
+                                        driverRef.setValue(studentId);
+
+                                        try {
+                                            DatabaseReference detail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(DonorKey);
+                                            detail.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    if(dataSnapshot!=null){
+                                                    detail1 = dataSnapshot.child("name").getValue().toString();
+                                                    detail2 = dataSnapshot.child("mobile").getValue().toString();
+                                                    detail3 = dataSnapshot.child("user_n").getValue().toString();
+                                                    detail4 = dataSnapshot.child("timing").getValue().toString();
+//                                                    if(Stime!=null){
+//                                                    Itime = Integer.getInteger(Stime);}
+        //                                                Toast.makeText(AcceptorMapsActivity.this, detail1+" || "+detail2+" || "+detail3, Toast.LENGTH_SHORT).show();
+                                                        while(detail2==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+
+                                                        //FOr day and night donor availiblity
+                                                        Itime = Integer.parseInt(Stime);
+                                                        if(detail4.equals("day")){
+                                                            if((Itime>=20 || Itime<=8))
+                                                                detaill.add("Currently Unavailable");
+                                                            else
+                                                                detaill.add(detail3 + " || " + detail1 + " || " + detail2);
+                                                        }
+                                                        else if(detail4.equals("all")){
+                                                            detaill.add(detail3 + " || " + detail1 + " || " + detail2);
+        //                                                Toast.makeText(AcceptorMapsActivity.this, "started", Toast.LENGTH_SHORT).show();
+                                                        }
 
 
 
-                                        }}
+                                                }}
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
+                                                }
+                                            });
+
+
+                                            //finding the available donor and storing their information
+                                            final int[] count = {0};
+                                            for(String sss:keys){
+//                                                Toast.makeText(AcceptorMapsActivity.this, sss, Toast.LENGTH_SHORT).show();
+
+                                                DatabaseReference marker = FirebaseDatabase.getInstance().getReference().child("donor_available").child(sss).child("l");
+        //                                                while(marker.toString()==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+                                                marker.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshott) {
+
+                                                            if (dataSnapshott != null) {
+//                                                                Toast.makeText(AcceptorMapsActivity.this, "ended", Toast.LENGTH_SHORT).show();
+
+                                                                double lat_value = Double.parseDouble(dataSnapshott.child("0").getValue().toString());
+                                                                double long_value = Double.parseDouble(dataSnapshott.child("1").getValue().toString());
+            //
+                                                                if((Math.abs(langgi-long_value)<=0.02) && (Math.abs(altti-lat_value)<=0.02)){
+                                                                LatLng DLocation1 = new LatLng(lat_value, long_value);
+            //                                                    mBusMarker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon));
+                                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(DLocation1).title(detaill.get(count[0])));
+
+            //                                                    mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon)));
+            //                                                    mBusMarker1.setIcon(R.drawable.ic_icon);
+                                                                count[0]++;
+            //                                                        Toast.makeText(AcceptorMapsActivity.this, lat1+" || "+lon1, Toast.LENGTH_SHORT).show();
+                                                            }}
+
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            Toast.makeText(AcceptorMapsActivity.this, "Donor Not Found...", Toast.LENGTH_SHORT).show();
                                         }
-                                    });
-                                    final int[] count = {0};
-                                    for(String sss:keys){
-                                        Toast.makeText(AcceptorMapsActivity.this, sss, Toast.LENGTH_SHORT).show();
 
-                                        DatabaseReference marker = FirebaseDatabase.getInstance().getReference().child("donor_available").child(sss).child("l");
-//                                                while(marker.toString()==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
-                                        marker.addValueEventListener(new ValueEventListener() {
+
+                                        //This is something to add map of all the user
+                                        DatabaseReference DLocation1 = FirebaseDatabase.getInstance().getReference().child("donor_available").child(DonorKey).child("l");
+                                        DLocation1.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(DataSnapshot dataSnapshott) {
-                                                if (dataSnapshott != null) {
-                                                    Toast.makeText(AcceptorMapsActivity.this, "ended", Toast.LENGTH_SHORT).show();
+                                                if (dataSnapshott.exists()) {
+                                                    List<Object> map = (List<Object>) dataSnapshott.getValue();
+                                                    double lat1 = 0;
+                                                    double lon1 = 0;
+                                                    if (map.get(0) != null) {
+                                                        lat1 = Double.parseDouble(map.get(0).toString());
+                                                    }
 
-                                                    double lat_value = Double.parseDouble(dataSnapshott.child("0").getValue().toString());
-                                                    double long_value = Double.parseDouble(dataSnapshott.child("1").getValue().toString());
-//
+                                                    if (map.get(1) != null) {
+                                                        lon1 = Double.parseDouble(map.get(1).toString());
+                                                    }
 
-                                                    LatLng busLocation1 = new LatLng(lat_value, long_value);
-//                                                    mBusMarker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon));
-                                                    mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(detaill.get(count[0])));
+                                                    LatLng DLocation1 = new LatLng(lat1, lon1);
+                                                    DatabaseReference def1= dataSnapshott.getRef();
+                                                    myParentNode = def1.getParent().getKey();
+    //                            Toast.makeText(AcceptorMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+                                                    doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+                                                    doornail.addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            String name4 = dataSnapshot.getValue().toString();
+                                                            String[] risi= name4.split(",");
+                                                            don = risi[0].substring(1);
+                                                            no = risi[1];
+                                                            id = risi[2];
 
-//                                                    mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon)));
+    //                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
+                                         SS =  don+" || "+no+" || "+id;
+                                                        }
 
-//                                                    mBusMarker1.setIcon(R.drawable.ic_icon);
-                                                    count[0]++;
-//                                                        Toast.makeText(AcceptorMapsActivity.this, lat1+" || "+lon1, Toast.LENGTH_SHORT).show();
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
+    //                                                if (mBusMarker1 != null) mBusMarker1.remove();
+                                                    if(!fina.equals(SS)){
+    //                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(DLocation1).title(don+" "+no+" "+id));
+                                                    fina = SS;}
+
+
                                                 }
                                             }
 
@@ -356,141 +499,82 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                                             }
                                         });
 
+
+
+    //                                    Toast.makeText(AcceptorMapsActivity.this, DonorKey, Toast.LENGTH_LONG).show();
+
+
+                                        DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
+                                        GeoFire geofire = new GeoFire(locationAdd);
+                                        geofire.setLocation(studentId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                                        return;
                                     }
-
-
-
-
-
-
-
-                                    //This is something to add map of all the user
-                                    DatabaseReference busLocation1 = FirebaseDatabase.getInstance().getReference().child("donor_available").child(busDriverKey).child("l");
-                                    busLocation1.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshott) {
-                                            if (dataSnapshott.exists()) {
-                                                List<Object> map = (List<Object>) dataSnapshott.getValue();
-                                                double lat1 = 0;
-                                                double lon1 = 0;
-                                                if (map.get(0) != null) {
-                                                    lat1 = Double.parseDouble(map.get(0).toString());
-                                                }
-
-                                                if (map.get(1) != null) {
-                                                    lon1 = Double.parseDouble(map.get(1).toString());
-                                                }
-
-                                                LatLng busLocation1 = new LatLng(lat1, lon1);
-                                                DatabaseReference def1= dataSnapshott.getRef();
-                                                myParentNode = def1.getParent().getKey();
-//                            Toast.makeText(AcceptorMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
-                                                doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
-                                                doornail.addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        String name4 = dataSnapshot.getValue().toString();
-                                                        String[] risi= name4.split(",");
-                                                        don = risi[0].substring(1);
-                                                        no = risi[1];
-                                                        id = risi[2];
-
-//                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
-                                     SS =  don+" || "+no+" || "+id;
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-
-                                                    }
-                                                });
-//                                                if (mBusMarker1 != null) mBusMarker1.remove();
-                                                if(!fina.equals(SS)){
-//                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(busLocation1).title(don+" "+no+" "+id));
-                                                fina = SS;}
-
-
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-
-
-
-//                                    Toast.makeText(AcceptorMapsActivity.this, busDriverKey, Toast.LENGTH_LONG).show();
-
-
-                                    DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
-                                    GeoFire geofire = new GeoFire(locationAdd);
-                                    geofire.setLocation(studentId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                                    return;
+                                    spinner.setVisibility(View.GONE);
                                 }
-                                spinner.setVisibility(View.GONE);
-                            }
 
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
+                                }
+                            });
 
-                        
-                        break;
 
+                            break;
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(AcceptorMapsActivity.this, "Network Error...", Toast.LENGTH_LONG).show();
+                    }
+
+                    //for linking blood group
                     case R.id.link_bus:
 
                         AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
                         metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
-                                .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
+                                .setItems(R.array.Bgroup, (dialogInterface, i) -> {
                                     switch (i) {
                                         case 0:
-                                            bus_num = 1;
+                                            group = 1;
                                             break;
                                         case 1:
-                                            bus_num = 2;
+                                            group = 2;
                                             break;
                                         case 2:
-                                            bus_num = 3;
+                                            group = 3;
                                             break;
                                         case 3:
-                                            bus_num = 4;
+                                            group = 4;
                                             break;
                                         case 4:
-                                            bus_num = 5;
+                                            group = 5;
                                             break;
                                         case 5:
-                                            bus_num = 6;
+                                            group = 6;
                                             break;
                                         case 6:
-                                            bus_num = 7;
+                                            group = 7;
                                             break;
                                         case 7:
-                                            bus_num = 8;
+                                            group = 8;
                                             break;
                                         case 8:
-                                            bus_num = 9;
+                                            group = 9;
                                             break;
                                         case 9:
-                                            bus_num = 10;
+                                            group = 10;
                                             break;
 
                                     }
@@ -499,7 +583,7 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
 //                                    DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
 //                                    ref1.setValue("Acceptor");
                                     SharedPreferences.Editor editor = prefs.edit();
-                                    editor.putInt(getString(R.string.bus_no), bus_num);
+                                    editor.putInt(getString(R.string.bus_no), group);
                                     editor.commit();
                                 });
                         metadialogBuilder.show();
@@ -509,7 +593,7 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
                         FirebaseAuth.getInstance().signOut();
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.remove(getString(R.string.isDriver));
-                        editor.remove(getString(R.string.student_maps_first_time_launch));
+                        editor.remove(getString(R.string.acceptor_maps_first_time_launch));
                         editor.remove(getString(R.string.bus_no));
                         editor.commit();
 
@@ -539,17 +623,17 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
         mDrawerToggle.syncState();
     }
 
-    private void getNearestBus() {
-        DatabaseReference nearestBus = FirebaseDatabase.getInstance().getReference().child("donor_available");
-        GeoFire geoFire = new GeoFire(nearestBus);
-        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(studentLocation.latitude, studentLocation.longitude), radiusLocateBusRequest);
+    private void getNearestDonor() {
+        DatabaseReference nearesDonor = FirebaseDatabase.getInstance().getReference().child("donor_available");
+        GeoFire geoFire = new GeoFire(nearesDonor);
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(acceptorLocation.latitude, acceptorLocation.longitude), radiusLocateBusRequest);
         geoQuery.removeAllListeners();
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                if (!busFound) {
-                    busFound = true;
-                    busDriverKey = key;
+                if (!DonorFound) {
+                    DonorFound = true;
+                    DonorKey = key;
                 }
             }
 
@@ -565,9 +649,9 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
 
             @Override
             public void onGeoQueryReady() {
-                if (!busFound) {
+                if (!DonorFound) {
                     radiusLocateBusRequest++;
-                    getNearestBus();
+                    getNearestDonor();
                 }
 
             }
@@ -584,7 +668,7 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermission();
             return;
         }
@@ -616,10 +700,10 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(1000)
                 .setFastestInterval(1000)
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermission();
             return;
         }
@@ -643,13 +727,307 @@ public class AcceptorMapsActivity extends AppCompatActivity implements OnMapRead
         mLastKnownLocation = location;
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         Log.e(LOG_TAG, "Latitude and longitude are : " + latLng);
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo((float) 14));
 
     }
 
     public void requestPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, RC_PER);
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, RC_PER);
+    }
+
+    public void selectgrp(View view) {
+        AlertDialog.Builder metadialogBuilder = new AlertDialog.Builder(AcceptorMapsActivity.this);
+        metadialogBuilder.setTitle(getString(R.string.selectBusTitle))
+                .setItems(R.array.Bgroup, (dialogInterface, i) -> {
+                    switch (i) {
+                        case 0:
+                            group = 1;
+                            locate();
+                            break;
+                        case 1:
+                            group = 2;
+                            locate();
+                            break;
+                        case 2:
+                            group = 3;
+                            locate();
+                            break;
+                        case 3:
+                            group = 4;
+                            locate();
+                            break;
+                        case 4:
+                            group = 5;
+                            locate();
+                            break;
+                        case 5:
+                            group = 6;
+                            locate();
+                            break;
+                        case 6:
+                            group = 7;
+                            locate();
+                            break;
+                        case 7:
+                            group = 8;
+                            locate();
+                            break;
+                        case 8:
+                            group = 9;
+                            locate();
+                            break;
+                        case 9:
+                            group = 10;
+                            locate();
+                            break;
+
+                    }
+
+
+                });
+        metadialogBuilder.show();
+
+
+    }
+
+    private void locate() {
+        String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                                    DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(bus_num)).child(uId);
+//                                    ref1.setValue("Acceptor");
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(getString(R.string.bus_no), group);
+        editor.commit();
+        final int[] counter = {0};
+        try {
+            ArrayList<String> keys = new ArrayList<String>();
+            ArrayList<String> detaill = new ArrayList<String>();
+            if (prefs.getInt(getString(R.string.bus_no), 0)==0){
+                Toast.makeText(AcceptorMapsActivity.this, "Please link your Blood Group first!", Toast.LENGTH_LONG).show();
+
+            }
+            spinner.setVisibility(View.VISIBLE);
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("request_wait");
+            GeoFire geofire = new GeoFire(ref);
+            geofire.setLocation(userId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+
+            etaLocation = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            langgi = mLastKnownLocation.getLongitude();
+            altti = mLastKnownLocation.getLatitude();
+
+            //Fod adding marker in google map
+            mMap.addMarker(new MarkerOptions().position(etaLocation));
+            Toast.makeText(AcceptorMapsActivity.this, "Requesting...", Toast.LENGTH_SHORT).show();
+
+            GNo = prefs.getInt(getString(R.string.bus_no), 0);
+
+
+            if (GNo==0){
+                Toast.makeText(AcceptorMapsActivity.this, "Please add your Blood Group first in settings!", Toast.LENGTH_LONG).show();
+
+            }
+
+            //Database retrieval
+            DatabaseReference busRef = FirebaseDatabase.getInstance().getReference().child("Save the Life").child(String.valueOf(GNo));
+            busRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    DonorKey = dataSnapshot.getKey();
+                    String isDriver = dataSnapshot.getValue(String.class);
+                    if (isDriver.equals("Donor")){
+                        DonorKey = dataSnapshot.getKey();
+                        donorFound = true;
+                        HashMap map = new HashMap();
+                        map.put("busDriverID", DonorKey);
+                        ref.child(userId).updateChildren(map);
+                        Log.e(LOG_TAG, "keyis : " + DonorKey);
+
+                        String studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        keys.add(DonorKey);
+                        counter[0]++;
+                        key_no++;
+                        DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users")
+                                .child("Donor")
+                                .child(DonorKey)
+                                .child("acceptorRequest");
+                        driverRef.setValue(studentId);
+
+                        try {
+                            DatabaseReference detail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(DonorKey);
+                            detail.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot!=null){
+                                        detail1 = dataSnapshot.child("name").getValue().toString();
+                                        detail2 = dataSnapshot.child("mobile").getValue().toString();
+                                        detail3 = dataSnapshot.child("user_n").getValue().toString();
+                                        detail4 = dataSnapshot.child("timing").getValue().toString();
+//                                                    if(Stime!=null){
+//                                                    Itime = Integer.getInteger(Stime);}
+                                        //                                                Toast.makeText(AcceptorMapsActivity.this, detail1+" || "+detail2+" || "+detail3, Toast.LENGTH_SHORT).show();
+                                        while(detail2==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+
+                                        //FOr day and night donor availiblity
+                                        Itime = Integer.parseInt(Stime);
+                                        if(detail4.equals("day")){
+                                            if((Itime>=20 || Itime<=8))
+                                                detaill.add("Currently Unavailable");
+                                            else
+                                                detaill.add(detail3 + " || " + detail1 + " || " + detail2);
+                                        }
+                                        else if(detail4.equals("all")){
+                                            detaill.add(detail3 + " || " + detail1 + " || " + detail2);
+                                            //                                                Toast.makeText(AcceptorMapsActivity.this, "started", Toast.LENGTH_SHORT).show();
+                                        }
+
+
+
+                                    }}
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                            //finding the available donor and storing their information
+                            final int[] count = {0};
+                            for(String sss:keys){
+//                                                Toast.makeText(AcceptorMapsActivity.this, sss, Toast.LENGTH_SHORT).show();
+
+                                DatabaseReference marker = FirebaseDatabase.getInstance().getReference().child("donor_available").child(sss).child("l");
+                                //                                                while(marker.toString()==null){ Toast.makeText(AcceptorMapsActivity.this, "", Toast.LENGTH_SHORT).show();}
+                                marker.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshott) {
+
+                                        if (dataSnapshott != null) {
+//                                                                Toast.makeText(AcceptorMapsActivity.this, "ended", Toast.LENGTH_SHORT).show();
+
+                                            double lat_value = Double.parseDouble(dataSnapshott.child("0").getValue().toString());
+                                            double long_value = Double.parseDouble(dataSnapshott.child("1").getValue().toString());
+                                            //
+                                            if((Math.abs(langgi-long_value)<=0.02) && (Math.abs(altti-lat_value)<=0.02)){
+                                                LatLng DLocation1 = new LatLng(lat_value, long_value);
+                                                //                                                    mBusMarker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon));
+                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(DLocation1).title(detaill.get(count[0])));
+
+                                                //                                                    mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_icon)));
+                                                //                                                    mBusMarker1.setIcon(R.drawable.ic_icon);
+                                                count[0]++;
+                                                //                                                        Toast.makeText(AcceptorMapsActivity.this, lat1+" || "+lon1, Toast.LENGTH_SHORT).show();
+                                            }else
+                                                count[0]++;
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(AcceptorMapsActivity.this, "Donor Not Found...", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                        //This is something to add map of all the user
+                        DatabaseReference DLocation1 = FirebaseDatabase.getInstance().getReference().child("donor_available").child(DonorKey).child("l");
+                        DLocation1.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshott) {
+                                if (dataSnapshott.exists()) {
+                                    List<Object> map = (List<Object>) dataSnapshott.getValue();
+                                    double lat1 = 0;
+                                    double lon1 = 0;
+                                    if (map.get(0) != null) {
+                                        lat1 = Double.parseDouble(map.get(0).toString());
+                                    }
+
+                                    if (map.get(1) != null) {
+                                        lon1 = Double.parseDouble(map.get(1).toString());
+                                    }
+
+                                    LatLng DLocation1 = new LatLng(lat1, lon1);
+                                    DatabaseReference def1= dataSnapshott.getRef();
+                                    myParentNode = def1.getParent().getKey();
+                                    //                            Toast.makeText(AcceptorMapsActivity.this, myParentNode, Toast.LENGTH_SHORT).show();
+                                    doornail = FirebaseDatabase.getInstance().getReference().child("Users").child("Donor").child(myParentNode );
+                                    doornail.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String name4 = dataSnapshot.getValue().toString();
+                                            String[] risi= name4.split(",");
+                                            don = risi[0].substring(1);
+                                            no = risi[1];
+                                            id = risi[2];
+
+                                            //                                    Toast.makeText(AcceptorMapsActivity.this, don+" || "+no+" || "+id, Toast.LENGTH_SHORT).show();
+                                            SS =  don+" || "+no+" || "+id;
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                    //                                                if (mBusMarker1 != null) mBusMarker1.remove();
+                                    if(!fina.equals(SS)){
+                                        //                                                mBusMarker1 = mMap.addMarker(new MarkerOptions().position(DLocation1).title(don+" "+no+" "+id));
+                                        fina = SS;}
+
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                        //                                    Toast.makeText(AcceptorMapsActivity.this, DonorKey, Toast.LENGTH_LONG).show();
+
+
+                        DatabaseReference locationAdd = FirebaseDatabase.getInstance().getReference().child("Users").child("Acceptor").child(studentId);
+                        GeoFire geofire = new GeoFire(locationAdd);
+                        geofire.setLocation(studentId, new GeoLocation(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                        return;
+                    }
+                    spinner.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (NumberFormatException e) {
+            Toast.makeText(AcceptorMapsActivity.this, "Network Error...", Toast.LENGTH_LONG).show();
+        }
     }
 }
 

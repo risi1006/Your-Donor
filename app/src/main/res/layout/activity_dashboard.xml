@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/untitled"
+    android:background="@drawable/backg7"
     tools:context=".dashboard">
 
     <LinearLayout
@@ -13,39 +13,55 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtdashboard1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lobster_two"
+                android:gravity="center"
+                android:text="Welcome"
+                android:textColor="#020202"
+                android:textSize="30sp"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtdashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:textSize="35sp" />
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/lobster_two"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#020202"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtdashboard"
-                android:text="My Dashboard"
-                android:textColor="#52BAFF"
-                android:textSize="23dp" />
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/textview_border"
+                android:gravity="center"
+                android:padding="10dp"
+                android:fontFamily="@font/lobster_two"
+                android:text="@string/dashboard"
+                android:textColor="#020202"
+                android:textSize="35dp" />
+        </LinearLayout>
 
 
-
-        </RelativeLayout>
-
-
-
-
-            <GridLayout
-                android:layout_marginTop="110dp"
+        <GridLayout
+                android:layout_marginTop="20dp"
                 android:columnCount="2"
-                android:rowCount="3"
+                android:rowCount="4"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false"
                 android:layout_width="match_parent"
@@ -60,46 +76,14 @@
                 <!--android:id="@+id/ritu"-->
                 <!--android:src="@drawable/rewardbkg"/>-->
 
+
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp"
-                    >
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/usrcerti"
-                            android:layout_width="88dp"
-                            android:layout_height="88dp"
-                            android:src="@drawable/certi" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Certificate"
-                            android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
@@ -108,6 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:onClick="BN"
                         android:orientation="vertical"
                         android:padding="16dp">
 
@@ -121,31 +106,36 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Blood\nNearby"
+                            android:text="@string/blood_nearby"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:onClick="CBA"
                         android:orientation="vertical"
                         android:padding="16dp">
 
                         <ImageView
-                            android:id="@+id/usrbloodbank"
+                            android:id="@+id/usrcerti"
                             android:layout_width="88dp"
                             android:layout_height="88dp"
                             android:src="@drawable/bloodbnk" />
@@ -154,7 +144,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Bloodbank"
+                            android:fontFamily="@font/lobster_two"
+                            android:textStyle="bold"
+                            android:text="@string/blood_avail"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -166,6 +158,7 @@
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
@@ -174,6 +167,44 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:onClick="BB"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/usrbloodbank"
+                            android:layout_width="88dp"
+                            android:layout_height="88dp"
+                            android:src="@drawable/bbb" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/bloodbank"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
+                            android:textColor="#6f6f6f"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    app:cardElevation="6dp"
+                    android:alpha="0.8"
+                    app:cardCornerRadius="12dp"
+                    android:layout_margin="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:onClick="OC"
                         android:orientation="vertical"
                         android:padding="16dp">
 
@@ -187,7 +218,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Hospital \nNearby"
+                            android:text="@string/org_camp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -199,6 +232,7 @@
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
@@ -207,6 +241,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:onClick="YP"
                         android:orientation="vertical"
                         android:padding="16dp">
 
@@ -220,18 +255,55 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Your Profile"
+                            android:fontFamily="@font/lobster_two"
+                            android:text="@string/profile"
+                            android:textStyle="bold"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
+                <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_columnWeight="1"-->
+                    <!--android:layout_rowWeight="1"-->
+                    <!--app:cardElevation="6dp"-->
+                    <!--app:cardCornerRadius="12dp"-->
+                    <!--android:layout_margin="12dp"-->
+                    <!--&gt;-->
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:padding="16dp">-->
+
+                        <!--<ImageView-->
+                            <!--android:id="@+id/usrreward"-->
+                            <!--android:layout_width="88dp"-->
+                            <!--android:layout_height="88dp"-->
+                            <!--android:src="@drawable/reward" />-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginTop="12dp"-->
+                            <!--android:text="Reward"-->
+                            <!--android:fontFamily="@font/lobster_two"-->
+                            <!--android:textColor="#6f6f6f"-->
+                            <!--android:textSize="18sp" />-->
+
+                    <!--</LinearLayout>-->
+                <!--</android.support.v7.widget.CardView>-->
                 <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
@@ -240,39 +312,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/usrreward"
-                            android:layout_width="88dp"
-                            android:layout_height="88dp"
-                            android:src="@drawable/reward" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Reward"
-                            android:textColor="#6f6f6f"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="6dp"
-                    app:cardCornerRadius="12dp"
-                    android:layout_margin="12dp"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:onClick="CL"
                         android:orientation="vertical"
                         android:padding="16dp">
 
@@ -286,7 +326,46 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Contact\n lifelines"
+                            android:text="@string/contact"
+                            android:textColor="#6f6f6f"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    app:cardElevation="6dp"
+                    android:alpha="0.8"
+                    app:cardCornerRadius="12dp"
+                    android:layout_margin="12dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:onClick="logoff"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/logoff"
+                            android:layout_width="88dp"
+                            android:layout_height="88dp"
+                            android:src="@drawable/log" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/logout"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
@@ -298,6 +377,7 @@
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="6dp"
+                    android:alpha="0.8"
                     app:cardCornerRadius="12dp"
                     android:layout_margin="12dp"
                     >
@@ -306,6 +386,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:onClick="Dev"
                         android:orientation="vertical"
                         android:padding="16dp">
 
@@ -319,12 +400,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Developer"
+                            android:text="@string/developer"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/lobster_two"
                             android:textColor="#6f6f6f"
                             android:textSize="18sp" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
+
+
 
             </GridLayout>
 

@@ -1,4 +1,4 @@
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
 import android.Manifest;
 import android.app.NotificationManager;
@@ -124,7 +124,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        DonorMapsActivity.setVisibility(View.INVISIBLE);
+//        DonorMapsActivity.setVisibility(ViewPagerAdapter.INVISIBLE);
 //*************************************First check if GPS is enabled************************************************************************************
         turnGPSOn();
 
@@ -221,7 +221,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
             Intent intent = new Intent(DonorMapsActivity.this, dashboard.class);
             startActivity(intent);
             finish();
-        }, 10000L);
+        }, 6000L);
 
 
             Toast.makeText(DonorMapsActivity.this,"Turn on GPS\nGo to the drawer\nYou will be redirected to main page.", Toast.LENGTH_LONG).show();
@@ -232,7 +232,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
         requestRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(DonorMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(DonorMapsActivity.this, "Request Available!", Toast.LENGTH_LONG).show();
                 CharSequence name = getString(R.string.channel_name);
                 String description = getString(R.string.channel_description);
 //                @SuppressLint("InlinedApi") int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -284,6 +284,11 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
                     }).setNegativeButton(R.string.cancel, (dialog, id) -> dialog.cancel());
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
+            if (enabled)
+            {
+                Intent intent = new Intent(DonorMapsActivity.this, dashboard.class);
+                startActivity(intent);
+            }
         }
         else
         {
@@ -309,7 +314,7 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
             case R.id.link_bus:
                 AlertDialog.Builder metaDialog = new AlertDialog.Builder(DonorMapsActivity.this);
                 metaDialog.setTitle(getString(R.string.selectBusTitle))
-                        .setItems(R.array.bus_numbers, (dialogInterface, i) -> {
+                        .setItems(R.array.Bgroup, (dialogInterface, i) -> {
                             switch (i) {
                                 case 0:
                                     bus_num = 1;
@@ -400,6 +405,8 @@ public class DonorMapsActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     protected void onDestroy() {
+        Intent intent = new Intent(DonorMapsActivity.this, dashboard.class);
+        startActivity(intent);
         super.onDestroy();
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();

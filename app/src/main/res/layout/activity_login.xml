@@ -5,53 +5,91 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backg2"
     android:padding="10dp"
-    android:background="#a42824"
-    tools:context="com.example.risi.your_donor.LoginActivity" >
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.donation.risi.your_donor.LoginActivity" >
+
+    //for scrolling the sign in page
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
 
         android:clipToPadding="false"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp"
         android:paddingTop="26dp"
-        android:background="#a42824"
+        android:paddingRight="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+        //liner layout of all elements
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
+            //for Blood donation image
+
+
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="220dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="centerCrop"
+                android:text="Your Donor"
+                android:textSize="50dp"
 
+                android:textColor="#000"
                 android:src="@drawable/bkg2" />
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:src="@drawable/my_logo" />
+
+            //for college icon
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/iit8" />
+
+            //for email field
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="0dp"
                 android:layout_marginTop="10dp"
                 android:paddingTop="@dimen/padding_large"
+                android:paddingBottom="0dp"
                 android:textColorHint="#000000">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/usrname_et"
+                    android:background="@drawable/round_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:hint="@string/username"
-                    android:inputType="textEmailAddress" />
+                    android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:inputType="textEmailAddress"
+                    app:layout_anchor="@+id/nestedScrollView"
+                    app:layout_anchorGravity="center" />
             </android.support.design.widget.TextInputLayout>
+
+            //for password field
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout_password"
@@ -66,64 +104,134 @@
                     android:id="@+id/password_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/round_text"
                     android:hint="@string/password"
+                    android:drawableLeft="@drawable/ic_vpn_key_black_18dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_vpn_key_black_18dp"
                     android:inputType="textPassword" />
+                <Button
+                    android:id="@+id/forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:onClick="forget"
+                    android:textColor="#000"
+                    android:alpha="0.7"
+                    android:background="#00E7D1D1"
+
+                    android:text="@string/forgot" />
+
+
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp">
+                android:padding="5dp"
+                android:layout_marginBottom="0dp"
+                android:orientation="horizontal">
+
+                //for registration process
+                //This is for name field....In gone mode
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name" />
-
-
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="I am a"-->
-                    <!--android:textSize="17sp"-->
-                    <!--android:paddingRight="32dp"-->
-                    <!--android:textColor="#000000"/>-->
-
-                <!--<android.support.v7.widget.AppCompatSpinner-->
-                    <!--android:id="@+id/chooser_spinner"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:entries="@array/choose"-->
-                    <!--android:gravity="end" />-->
+                    android:background="@drawable/round_text"
+                    android:hint="Name"
+                    android:visibility="gone"
+                    android:padding="10dp"
+                    android:drawableLeft="@drawable/ic_account_box_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_account_box_black_24dp"
+                    />
             </LinearLayout>
+
+            //for registration process
+            //This is for Contact no field....In gone mode
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp">
+                android:layout_marginBottom="0dp"
+                android:orientation="horizontal">
+
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contact no" />
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:background="@drawable/round_text"
+                    android:drawableLeft="@drawable/ic_phone_android_black_24dp"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/ic_phone_android_black_24dp"
+                    android:hint="Contact no"
+                    />
 
             </LinearLayout>
+
+            //for registration process
+            //This is Drop down button to select users blood group
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone"
+                android:background="@drawable/round_text"
+                android:drawableLeft="@drawable/ic_group_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_group_black_24dp"
+                 />
+
+            //for registration process
+            //This is Drop down button to select contact timeing
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text"
+                android:visibility="gone"
+                android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_access_time_black_24dp"
+                 />
+
+            //Button for signin process
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
+                android:background="@drawable/round_text"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="#a32824"
-                android:text="@string/login"
+                android:text="@string/signin"
+                android:textColor="#000" />
 
-                android:textColor="#FFFFFF" />
+
+            //Button for going to Registration from section
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnregisterr"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:text="@string/signup"
+                android:alpha="0.7"
+                android:background="#00E7D1D1"
+                android:textColor="#000" />
+
+            //Button to register on the app
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnregister"
@@ -131,17 +239,57 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="#a32824"
-                android:text="@string/register"
+                android:text="@string/signup1"
+                android:textColor="#000"
+                android:background="@drawable/round_text"
+                android:visibility="gone" />
 
-                android:textColor="#FFFFFF" />
+            //Button to goto Login section
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/Loginn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="#00E7D1D1"
+                android:text="@string/signin1"
+                android:textColor="#000"
+                android:visibility="gone" />
 
 
+            //How to use
 
+            <Button
+                android:id="@+id/useE"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:onClick="userE"
+                android:alpha="0.7"
+                android:background="#00E7D1D1"
+                android:text="@string/howtouse"
+                android:textColor="#000" />
+
+            //How to use
+
+            <Button
+                android:id="@+id/useH"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:onClick="userH"
+                android:alpha="0.7"
+                android:background="#00E7D1D1"
+                android:text="Change Language"
+                android:textColor="#000" />
 
         </LinearLayout>
 
+
     </android.support.v4.widget.NestedScrollView>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

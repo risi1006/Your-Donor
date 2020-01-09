@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.risi.your_donor">
+    package="com.donation.risi.your_donor">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+    <!-- <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> -->
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- <uses-permission android:name="android.permission.READ_PROFILE" /> -->
+    <!-- <uses-permission android:name="android.permission.READ_CONTACTS" /> -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -21,18 +19,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
-
-        <activity android:name="com.example.risi.your_donor.LoginActivity">
+        <activity android:name=".fine_location"></activity>
+        <activity android:name=".editprofile" /> <!-- <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/> -->
+        <activity android:name=".HUseH">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.risi.your_donor.MapActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MapActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -44,30 +41,37 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.example.risi.your_donor.DonorMapsActivity"
+            android:name=".DonorMapsActivity"
             android:label="@string/title_activity_driver_maps"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.example.risi.your_donor.AcceptorMapsActivity"
+            android:name=".AcceptorMapsActivity"
             android:label="@string/title_activity_student_maps"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.example.risi.your_donor.dashboard" />
-        <activity android:name="com.example.risi.your_donor.profile" />
-        <activity android:name="com.example.risi.your_donor.developer" />
-        <activity android:name="com.example.risi.your_donor.reward" />
+        <activity android:name=".dashboard" />
+        <activity android:name=".profile" />
+        <activity android:name=".developer" />
+        <activity android:name=".reward" />
 
+        <service
+            android:name=".MyService"
+            android:exported="false" />
 
+        <activity android:name=".chat" />
+        <activity android:name=".BloodBank" />
+        <activity android:name=".BloodAvailability" />
+        <activity android:name=".ProfileInfo" />
+        <activity android:name=".intermediate1" />
+        <activity android:name=".HUseE" />
 
-
-        <service android:name=".MyService"
-            android:exported="false"></service>
-
-        <activity android:name="com.example.risi.your_donor.chat"></activity>
-
-
-
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

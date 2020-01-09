@@ -1,4 +1,4 @@
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
 import org.junit.Test;
 

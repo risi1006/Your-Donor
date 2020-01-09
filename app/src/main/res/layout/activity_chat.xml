@@ -1,121 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#4B4A57"
+    android:background="@drawable/backg10"
     android:layout_height="match_parent"
     tools:context=".chat">
 
-    <EditText
-        android:id="@+id/usermsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Write your message here"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.996" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
+        <android.support.constraint.ConstraintLayout
 
-    <TextView
-        android:id="@+id/msg"
-        android:layout_width="337dp"
-        android:layout_height="425dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#4B4A57"
-        android:gravity="bottom"
-        android:hint="Your Message will appear"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.741"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.622" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/msg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.895"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp">
 
-    <EditText
-        android:id="@+id/rec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Id of the receiver"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054" />
+            <EditText
+                android:id="@+id/rec"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Id of the receiver"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toStartOf="@+id/join"
+                app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/join"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="join"
-        android:background="#34333c"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.767"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051" />
+            <Button
+                android:id="@+id/join"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="16dp"
+                android:background="#685DC3F1"
+                android:text="join"
+                app:layout_constraintEnd_toStartOf="@+id/clear"
+                tools:layout_editor_absoluteY="5dp" />
 
-    <Button
-        android:id="@+id/clear"
-        android:layout_width="57dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="clr"
-        android:background="#34333c"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.051" />
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="16dp"
+                android:background="#685DC3F1"
+                android:text="clr"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="5dp" />
+        </android.support.constraint.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/send"
-        android:layout_width="54dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#4B4A57"
-        android:src="@drawable/send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.998"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="396dp"
+            android:layout_height="523dp"
+            android:background="#8AC6DAE2"
+            android:gravity="bottom"
+            android:hint="Your Message will appear"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="7dp"
+            tools:ignore="MissingConstraints" />
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity=""
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/msg"
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/usermsg"
+                android:layout_width="252dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="16dp"
+                android:ems="10"
+                android:hint="Write your message here"
+                android:inputType="textPersonName"
+                android:paddingEnd="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <ImageButton
+                android:id="@+id/send"
+                android:layout_width="54dp"
+                android:layout_height="50dp"
+                android:background="#11ACD4E6"
+                android:paddingEnd="10dp"
+                android:src="@drawable/send"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/usermsg"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="4dp" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

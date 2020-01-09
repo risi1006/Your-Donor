@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backg5"
+    tools:context=".editprofile">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingConstraints">
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="100dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+        <EditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/updtN"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/changeName"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/button3"
+            android:gravity="center"
+            android:background="#5C00BCD4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="upName"
+            android:text="@string/update" />
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/updtM"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/changeMob"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/button4"
+            android:background="#5C00BCD4"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="upMob"
+            android:text="@string/update" />
+
+    </LinearLayout>
+</ScrollView>
+</android.support.constraint.ConstraintLayout>

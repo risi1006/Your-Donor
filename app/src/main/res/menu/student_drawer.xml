@@ -17,5 +17,34 @@
             android:title="@string/logout"
             android:icon="@mipmap/ic_account_circle_black_24dp"/>
 
+
+
     </group>
+
+    <!--<group android:menuCategory="container">-->
+
+        <!--<string-array android:name="states">-->
+            <!--<item >India</item>-->
+
+            <!--<item >Pakisthan</item>-->
+
+            <!--<item >Sri Lanka</item>-->
+
+        <!--</string-array>-->
+
+        <!--<string-array name="city_india">-->
+
+            <!--<item>Mumbai</item>-->
+
+            <!--<item>Chennai</item>-->
+
+            <!--<item>Kolkata</item>-->
+
+            <!--<item>Bangalore</item>-->
+
+        <!--</string-array>-->
+
+    <!--</group>-->
+
+
 </menu>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="username">ਈ - ਮੇਲ</string>
+    <string name="password">ਪਾਸਵਰਡ(min 8 character)</string>
+    <string name="signin">ਸਾਈਨ - ਇਨ</string>
+    <string name="signup">ਖਾਤਾ ਨਹੀ ਹੈ .. ਰਜਿਸਟਰ</string>
+    <string name="signup1">ਸਾਇਨ ਅਪ</string>
+    <string name="signin1">ਪਹਿਲਾਂ ਹੀ ਖਾਤਾ ਹੈ ... ਸਾਈਨ ਇਨ ਕਰੋ</string>
+    <string name="howtouse">ਐਪ ਦੀ ਵਰਤੋਂ ਕਿਵੇਂ ਕਰੀਏ</string>
+    <string name="app_name">ਤੁਹਾਡਾ ਦਾਨੀ</string>
+    <string name="toggle_login_signin">ਨਵਾਂ ਇਥੇ? ਸਾਇਨ ਅਪ</string>
+    <string name="login">ਲਾਗਿਨ</string>
+    <string name="error_email_required">ਈਮੇਲ ਦੀ ਲੋੜ ਹੈ</string>
+    <string name="error_password_required">ਪਾਸਵਰਡ ਖਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦਾ</string>
+    <string name="welcome">ਬਲੱਡ ਬੈਂਕ ਵਿਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ</string>
+    <string name="enterblood">ਬਲੱਡ ਬੈਂਕ ਦੀ ਆਈਡੀ ਦਿਓ</string>
+    <string name="search">ਖੋਜ</string>
+    <string name="Whole_Human_Blood">ਪੂਰਾ ਮਨੁੱਖੀ ਲਹੂ</string>
+    <string name="rbc">ਪੈਕ ਰੈੱਡ ਬਲੱਡ ਸੈੱਲ</string>
+    <string name="ffp">ਤਾਜ਼ਾ ਫ੍ਰੋਜ਼ਨ ਪਲਾਜ਼ਮਾ</string>
+    <string name="pc">ਪਲੇਟਲੈਟਸ</string>
+    <string name="save"></string>
+    <string name="dashboard">ਡੈਸ਼ਬੋਰਡ</string>
+    <string name="blood_nearby">ਖੂਨ\nਨੇੜੇ</string>
+    <string name="blood_avail">ਖੂਨ ਦੀ \nਉਪਲਬਧਤਾ\nਦੀ ਜਾਂਚ ਕਰੋ</string>
+    <string name="bloodbank">ਬਲੱਡਬੈਂਕ</string>
+    <string name="org_camp">ਕੈਂਪ ਦਾ \nਆਯੋਜਨ ਕਰੋ</string>
+    <string name="profile">ਤੁਹਾਡਾ \nਪ੍ਰੋਫਾਈਲ</string>
+    <string name="contact">Contact\n lifelines</string>
+    <string name="developer">ਡਿਵੈਲਪਰ</string>
+    <string name="enable_loc">ਜਾਰੀ ਰੱਖਣ ਲਈ ਸਥਾਨ ਨੂੰ ਸਮਰੱਥ ਕਰੋ</string>
+    <string name="name">ਨਾਮ</string>
+    <string name="mobile">ਮੋਬਾਈਲ</string>
+    <string name="id">ਯੂਜਰ ਆਈਡੀ</string>
+    <string name="changeName">Update Name</string>
+    <string name="changeMob">Update Mobile</string>
+    <string name="update">Update</string>
+    <string name="edit">Edit Your Profile</string>
+    <string name="deregister">Deregister Your Account</string>
+    <string name="forgot">Forgot Password</string>
+    <string name="submit">submit</string>
+    <!--<string name="Link_bus" tools:ignore="MissingTranslation">Link</string>-->
+    <string-array name="choose">
+        <item>Donor</item>
+        <!--<item>Student</item>-->
+    </string-array>
+    <string name="title_activity_login2">Sign in</string>
+
+    <string name="gps_dialog_title" tools:ignore="MissingTranslation">GPS...</string>
+    <string name="gps_enable_message" tools:ignore="MissingTranslation"><![CDATA[GPS is not enable, Please enable it in next window.<br>]]></string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="register">Register</string>
+    <string name="title_activity_driver_maps">Map</string>
+    <string name="title_activity_student_maps">Map</string>
+    <string name="get_eta">Get ETA</string>
+    <string name="ReadyToGo">Ready to Donate</string>
+    <string name="logout">Logout</string>
+    <string name="request_wait">Search</string>
+    <string name="isDriver">is_donor</string>
+    <string name="locate_bus">Find nearest donor</string>
+    <string name="selectBusTitle">Whats your Blood Group?</string>
+    <string name="ok">OK</string>
+    <string name="LOGO">Logo</string>
+    <string name="Link_bus">Link Blood Group</string>
+    <string name="Link_gropu">Link Blood Group</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="acceptor_maps_first_time_launch">acceptor_maps_first_time_launch</string>
+    <string name="bus_no">Group_no</string>
+    <string name="channel_name">channel_01</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="cancel">Cancel</string>
+    <string name="channel_description">Notificattion channel for showing notificaiton for reqeust from Acceptor.</string>
+    <string name="request_wait_notification">An acceptor nearby is requesting you for Blood.</string>
+    <string name="launched_via_notification">launch_via_notification</string>
+
+    <string-array name="Bgroup">
+        <item>"A+ve"</item>
+        <item>"A-ve"</item>
+        <item>"B+ve"</item>
+        <item>"B-ve"</item>
+        <item>"AB+ve"</item>
+        <item>"AB-ve"</item>
+        <item>"O+ve"</item>
+        <item>"O-ve"</item>
+        <item>"Hospital"</item>
+        <item>"Blood Bank"</item>
+    </string-array>
+</resources>

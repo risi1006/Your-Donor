@@ -4,7 +4,7 @@
 //import android.net.Uri;
 //import android.support.v7.app.AppCompatActivity;
 //import android.os.Bundle;
-//import android.view.View;
+//import android.view.ViewPagerAdapter;
 //import android.widget.ImageView;
 //
 //import com.google.firebase.database.DatabaseReference;
@@ -32,7 +32,7 @@
 //        imageView = (ImageView)findViewById(R.id.usrimg);
 //    }
 //
-//    public void btnBrowse(View view) {
+//    public void btnBrowse(ViewPagerAdapter view) {
 //        Intent intent = new Intent();
 //        intent.setType("image/*");
 //        intent.setAction(Intent.ACTION_GET_CONTENT);

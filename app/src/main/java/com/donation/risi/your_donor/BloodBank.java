@@ -1,11 +1,10 @@
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,10 +16,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class BloodBank extends AppCompatActivity {
 
-    private String a11=" ",a12=" ",b11=" ",b12=" ",ab11=" ",ab12=" ",o11=" ",o12=" ";
-    private String a21=" ",a22=" ",b21=" ",b22=" ",ab21=" ",ab22=" ",o21=" ",o22=" ";
-    private String a31=" ",a32=" ",b31=" ",b32=" ",ab31=" ",ab32=" ",o31=" ",o32=" ";
-    private String a41=" ",a42=" ",b41=" ",b42=" ",ab41=" ",ab42=" ",o41=" ",o42=" ";
+    private String a11=null,a12=null,b11=null,b12=null,ab11=null,ab12=null,o11=null,o12=null;
+    private String a21=null,a22=null,b21=null,b22=null,ab21=null,ab22=null,o21=null,o22=null;
+    private String a31=null,a32=null,b31=null,b32=null,ab31=null,ab32=null,o31=null,o32=null;
+    private String a41=null,a42=null,b41=null,b42=null,ab41=null,ab42=null,o41=null,o42=null;
 
 
     private EditText a111;
@@ -229,40 +228,104 @@ public class BloodBank extends AppCompatActivity {
     public void Save(View view) {
 
         a11 = a111.getText().toString();
+        if(a11==null)
+            a11=" ";
         a21 = a211.getText().toString();
+        if(a21==null)
+            a21=" ";
         a31 = a311.getText().toString();
+        if(a31==null)
+            a31=" ";
         a41 = a411.getText().toString();
+        if(a41==null)
+            a41=" ";
         a12 = a121.getText().toString();
+        if(a12==null)
+            a12=" ";
         a22 = a221.getText().toString();
+        if(a22==null)
+            a22=" ";
         a32 = a321.getText().toString();
+        if(a32==null)
+            a32=" ";
         a42 = a421.getText().toString();
+        if(a42==null)
+            a42=" ";
 
         b11 = b111.getText().toString();
+        if(b11==null)
+            b11=" ";
         b21 = b211.getText().toString();
+        if(b21==null)
+            b21=" ";
         b31 = b311.getText().toString();
+        if(b31==null)
+            b31=" ";
         b41 = b411.getText().toString();
+        if(b41==null)
+            b41=" ";
         b12 = b121.getText().toString();
+        if(b12==null)
+            b12=" ";
         b22 = b221.getText().toString();
+        if(b22==null)
+            b22=" ";
         b32 = b321.getText().toString();
+        if(b32==null)
+            b32=" ";
         b42 = b421.getText().toString();
+        if(b42==null)
+            b42=" ";
 
         ab11 = ab111.getText().toString();
+        if(ab11==null)
+            ab11=" ";
         ab21 = ab211.getText().toString();
+        if(ab21==null)
+            ab21=" ";
         ab31 = ab311.getText().toString();
+        if(ab31==null)
+            ab31=" ";
         ab41 = ab411.getText().toString();
+        if(ab41==null)
+            ab41=" ";
         ab12 = ab121.getText().toString();
+        if(ab12==null)
+            ab12=" ";
         ab22 = ab221.getText().toString();
+        if(ab22==null)
+            ab22=" ";
         ab32 = ab321.getText().toString();
+        if(ab32==null)
+            ab32=" ";
         ab42 = ab421.getText().toString();
+        if(ab42==null)
+            ab42=" ";
 
         o11 = o111.getText().toString();
+        if(o11==null)
+            o11=" ";
         o21 = o211.getText().toString();
+        if(o21==null)
+            o21=" ";
         o31 = o311.getText().toString();
+        if(o31==null)
+            o31=" ";
         o41 = o411.getText().toString();
+        if(o41==null)
+            o41=" ";
         o12 = o121.getText().toString();
+        if(o12==null)
+            o12=" ";
         o22 = o221.getText().toString();
+        if(o22==null)
+            o22=" ";
         o32 = o321.getText().toString();
+        if(o32==null)
+            o32=" ";
         o42 = o421.getText().toString();
+        if(o42==null)
+            o42=" ";
 
         try {
             String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -331,11 +394,11 @@ public class BloodBank extends AppCompatActivity {
             kkr=0;
         }
         catch (Exception e) {
-            int kkr=0;
-            while (kkr<=5){
-                Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
-                kkr++;
-            }
+//            int kkr=0;
+//            while (kkr<=5){
+//                Toast.makeText(this,"",Toast.LENGTH_SHORT).show();
+//                kkr++;
+//            }
             Intent intent = new Intent(BloodBank.this, BloodBank.class);
             startActivity(intent);
         }

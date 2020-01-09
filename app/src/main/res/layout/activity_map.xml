@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.risi.your_donor.MapActivity">
+    tools:context="com.donation.risi.your_donor.MapActivity">
 
 </android.support.constraint.ConstraintLayout>

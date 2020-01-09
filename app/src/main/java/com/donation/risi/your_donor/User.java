@@ -1,4 +1,4 @@
-package com.example.risi.your_donor;
+package com.donation.risi.your_donor;
 
 public class User {
     public String getName() {
