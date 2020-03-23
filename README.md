@@ -4,7 +4,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/its-not-a-lie-if-you-believe-it.svg)](https://forthebadge.com)
 
-[![GitHub license](https://github.com/risi1006/Your-Donor/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen?logo=github)](https://github.com/risi1006/Your-Donor/blob/master/LICENSE)
 [![PRs](https://img.shields.io/badge/PRs-Welcome-informational)](https://github.com/risi1006)
 -[![Python3.6](https://img.shields.io/badge/python-3.6-success?logo=python)](https://www.python.org/downloads/release/python-360/)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/risi1006)  
