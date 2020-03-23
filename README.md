@@ -1,5 +1,6 @@
 # Real time Blood donation android application
-> People new to any place can get to know unsafe area near them and can take various precautions.
+> People can get desired blood donor nearby.They can check blood availability in nearby blood banks.
+
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/its-not-a-lie-if-you-believe-it.svg)](https://forthebadge.com)
