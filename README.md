@@ -23,11 +23,8 @@
 - Currently supports four languages.
 
 ## Screenshots
+!["Yahan login page ka picture aata hai, but tumhara net slow hai"](/screenshot/ss1.jpg "Login page") !["Yahan dashboard ka picture aata hai, but tumhara net slow hai"](/screenshot/ss2.jpg "Dashboard") !["Yahan Profile section ka picture aata hai, but tumhara net slow hai"](/screenshot/ss3.jpg "Profile Section") !["Yahan aaspas k blood bank me blood availability ka picture aata hai, but tumhara net slow hai"](/screenshot/ss4.jpg "blood availability")
 
-<img src="/screenshot/ss1.jpg" alt="Yahan login page ka picture aata hai, but tumhara net slow hai">
-<img src="/screenshot/ss2.jpg" alt="Yahan dashboard ka picture aata hai, but tumhara net slow hai">
-<img src="/screenshot/ss3.jpg" alt="Yahan Profile section ka picture aata hai, but tumhara net slow hai">
-<img src="/screenshot/ss4.jpg" alt="Yahan aaspas k blood bank me blood availability ka picture aata hai, but tumhara net slow hai">
 
 ## Installation
 - Clone the repository using ```https://github.com/risi1006/Crime-Mapping```
