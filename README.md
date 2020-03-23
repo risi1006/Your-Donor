@@ -32,12 +32,13 @@
     <td>blood availability</td>
   </tr>
   <tr>
-    <td><img src="/screenshot/ss1.jpg" width=270 height=480></td>
-    <td><img src="/screenshot/ss2.jpg" width=270 height=480></td>
-    <td><img src="/screenshot/ss3.jpg" width=270 height=480></td>
-    <td><img src="/screenshot/ss4.jpg" width=270 height=480></td>
+    <td><img src="/screenshot/ss1.jpg" alt="Yahan login page ka picture aata hai, but tumhara net slow hai" width=300 height=480></td>
+    <td><img src="/screenshot/ss2.jpg" alt="Yahan dashboard ka picture aata hai, but tumhara net slow hai" width=300 height=480></td>
+    <td><img src="/screenshot/ss3.jpg" alt="Yahan Profile section ka picture aata hai, but tumhara net slow hai" width=300 height=480></td>
+    <td><img src="/screenshot/ss4.jpg" alt="Yahan aaspas k blood bank me blood availability ka picture aata hai, but tumhara net slow hai" width=300 height=480></td>
   </tr>
  </table>
+
 
 ## Installation
 - Clone the repository using ```https://github.com/risi1006/Crime-Mapping```
